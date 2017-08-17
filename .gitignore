@@ -5,3 +5,7 @@
 *.gz
 *.dvi
 *.toc
+*.bbl
+*.bcf
+*.blg
+*.xml
