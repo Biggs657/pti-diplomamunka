@@ -9,6 +9,7 @@
 \usepackage{textcomp}
 \usepackage{pdfpages} 
 \usepackage{graphicx}
+\usepackage[none]{hyphenat}
 \graphicspath{ {images/} }
 \usepackage[
 backend=biber,
@@ -34,6 +35,7 @@ backend=biber,
 \renewcommand{\listfigurename}{Ábrajegyzék} % ábrajegyzék átnevezés
 \renewcommand\cftchapaftersnum{.} % chapter szám utáni pont
 \renewcommand\cftchapdotsep{\cftdotsep} % chapter, és irodalomjegyzék szöveg utáni pontok
+\newcommand{\sectionbreak}{\clearpage} % címsorok új oldalon
 
 \addbibresource{bibliography.bib}
 
@@ -46,7 +48,7 @@ backend=biber,
 
 % Ezt idéztem \cite{AzureFundamentals}
 
-% \noindent // bekezdés első sorának indentálása
+% \noindent // bekezdés első sorának  nem indentálása
 
 % end help section
 
@@ -66,8 +68,8 @@ backend=biber,
 \subsection{Microsoft Hyper-V\texttrademark}
 
 \subsubsection{Deduplikáció}
-
-\noindent A Microsoft a Windows Server 2012 szerver verzióban jelentette be a Deduplikációt. A deduplikáció egy olyan folyamat amely feldolgozza az engedélyezett lemezek tartalmát és egyező adatblokkokat csak egyszer tárol le. Az ismétlődő blokkok esetén már csak referenciákat hagy. Ezzel a megoldással nagyon jó hatásfokkal lehet tárolóhelyet megtakarítani. A legjobban deduplikálható adatok a Virtualised Desktop Infrastructure - későbbiekben VDI rendszerek - amelyek esetén az operációs rendszer a hozzátartoztó frissítési csomagok, a feltelepített alkalmazások alapfileai többnyire minden rendszeren megegyeznek. Amennyiben a virtuális gépeken nagyon kevés egyedi file és telepített alkalmazás található úgy a deduplikációs ráta elérheti akár a 90\%-ot is.
+\noindent
+A Microsoft a Windows Server 2012 szerver verzióban jelentette be a Deduplikációt. A deduplikáció az a folyamat amely feldolgozza az engedélyezett lemezek tartalmát és egyező adatblokkokat csak egyszer tárol le. Az ismétlődő blokkok esetén már csak referenciákat hagy. Ezzel a megoldással nagyon jó hatásfokkal lehet tárolóhelyet megtakarítani. A legjobban deduplikálható adatok a Virtualised Desktop Infrastructure - későbbiekben VDI rendszerek - amelyek esetén az operációs rendszer a hozzátartoztó frissítési csomagok, a feltelepített alkalmazások alapfileai többnyire minden rendszeren megegyeznek. Amennyiben a virtuális gépeken nagyon kevés egyedi file és telepített alkalmazás található úgy a deduplikációs ráta elérheti akár a 90\%-ot is.
 
 %\\TODO kifejteni képekkel
 
@@ -106,39 +108,78 @@ backend=biber,
 
 \chapter{Esettanulmány háttércég}
 
-\section{Rendszer architektúra ismertetése}
+\section{Architektúra}
 
-\noindent Architektúrális szempontból Intel alapú szervereket használtam. A fejlesztői környezet alapját 2 db Dell PowerEdge R710-es szerver adta. A szerverek 
-a munka ideje alatt egyenként 2 db Intel{\textsuperscript{\textregistered}} Xeon{\textsuperscript{\textregistered}} E6545 processzorral (6 mag 12 HT szál), 96 GB DDR3 ECC RAM-al, 2x64 GB Rendszer lemezekkel illetve 2x136 GB adatlemezzel volt ellátva. A kettő szerver egy failover clusterben üzemelt. A rendszer és az adat lemezek RAID1-ben üzemeltek az adatvesztés megelőzése és a magas rendelkezésre állás biztosítása érdekében. Az adatlemezek mérete sosem volt gond a Windows Deduplikációs megoldása miatt.
+\noindent Architektúrális szempontból Intel alapú szervereket használtam. A fejlesztői és tesztelői környezet alapját 2 db Dell PowerEdge R710-es szerver adta. A szerverek a munka ideje alatt egyenként 2 db Intel{\textsuperscript{\textregistered}} Xeon{\textsuperscript{\textregistered}} E6545 processzorral (6 mag 12 HT szál), 96 GB DDR3 ECC RAM-al, 2x64 GB Rendszer lemezekkel illetve 2x136 GB adatlemezzel volt ellátva. A kettő szerver egy failover clusterben üzemelt. A rendszer és az adat lemezek RAID1-ben üzemeltek az adatvesztés megelőzése és a magas rendelkezésre állás biztosítása érdekében. Az adatlemezek mérete sosem volt gond a Windows Deduplikációs megoldása miatt.
+
+\noindent
+A rendszereinket központilag nem menedzselt, de egységes alapkonfigurációval látjuk el annak érdekében, ha az ügyfélnek segítségre lenne szüksége. 
+
+\noindent
+A megépített rendszerben használt alapkonfiguráció:
+\begin{itemize}
+	\item Processzor: 2 mag
+	\item Memória: dinamikus memória 1 GB minimum, 2 GB induláskor, 4 GB maximum.
+	\item Háttértár: 64 GB Operációs rendszer lemez, 32 GB Adat lemez
+	\item Hálózati kártya: 1 DB a megrendelő rendszerinek a belső hálózatán
+	\item Operációs rendszer: Windows Server 2012 R2
+\end{itemize}
 
 \subsubsection{A mester image használata}
 
-\noindent A rendszereinket központilag nem menedzselt, de egységes alapkonfigurációval látjuk el annak érdekében, ha az ügyfélnek segítségre lenne szüksége. A mester image előállítása nagyban meggyorsítja a megrendelt rendszerek elkészítését. Alapvetően két nagy irányzatot lehet felismerni ezen megoldások terén. 
+\noindent A mester image előállítása nagyban meggyorsítja a megrendelt rendszerek üzembehelyezését. Alapvetően két nagy irányzatot lehet felismerni ezen megoldások terén. 
 
+\noindent
 Az első megoldás amikor már egy telljesen kész rendszert tartalmazó de syspreppelt virtuális merevlemezt másolunk át a konténer mappájába. Majd azt a virtuális gép konfigurációjakor becsatoljuk és már indítható is rendszer. Ezek után összesen a végfelhasználó szerződést kell elfogadnunk és már használatba is vehetjük a gépünket. Amelyet át kell nevezni, be kell állítani számára a megfelelő IP konfigurációt és már át is adható a felhasználónak. 
 
-A másik irányzat amikor a Microsoft Deployment Toolkitet használjuk. 
+ 
 % \\TODO  A két irányzat alapvető lépéseit illetve a továbbiakban szükséges folyamatokat bemutatni
-\begin{figure}[h]
-\includegraphics[width=\textwidth]{generation_selection}
+\begin{figure}[t]
+\includegraphics[width=0.8\textwidth]{generation_selection}
 \caption{Generáció választás Hyper-V managerből készített virtuális gép esetén}
 \label{fig:gen_selection}
 \end{figure}
 
+
+A másik irányzat amikor a Microsoft Deployment Toolkitet használjuk.
 
 \section{Automatizált megoldások}
 \noindent
 
 \subsection{On-prem}
 \noindent
-\subsubsection{Provision-ObjectsForCompany.ps1}
-% \\TODO
 
-\subsubsection{Create-VM.ps1}
+Az automatizált rendszer első és lefontosabb építőköve a gyors virtális gépek elkészítése. Mivel az esettanulmányban egy szolgáltató céget tételeztem fel, így fontos volt, hogy minél kevesebb módon, lehetőleg telljesen automatikusan lehessen legyártani az igényelt virtális gépeket. 
+
+\subsubsection{Provision-ObjectsForCompany.ps1}
+Egy gyűjtő kód amely megfelelően paraméterezve elvégzni a telljes virtális gép létrehozás lépéseit. 
+A következőkben taglalt scripteket hívja meg. 
+A kódok végrehajtása az előkövetleményeknek megfelelően történik:
+\begin{enumerate}
+	\item VIrtuális Switch létrehozása ( Crete-NewVirtualSwitch.ps1 )
+	\item Viruális gép(ek) létrehozása ( Create-VM.ps1 )
+	\item A virtális gépek hálózatba fűzése ( Set-VMSwitchForVM.ps1 )
+\end{enumerate}
+
 % \\TODO
 
 \subsubsection{Create-NewVirtualSwitch.ps1}
+
+Virtuális switchek tulajdonságát korábban taglaltam. A cégnél a megrendelők rendszerei telljesen elválastott rendszerek, hacsak a megrendelők másképp nem rendelkeznek. Ellenben a virtális gépek amelyek egy megrendelőhöz kötődnek egymással közös hálózaton vannak. Szolgáltatói oldalon a cégekhez tartozó erőforrások azonosítása érdekében a megrendelő cég nevét eléfűzöm az erőforrás nevézhez. Amennyiben már létezik ilyen erőforrás úgy a script küld egy email üzenetet az üzemeltetőnek, hogy manuális ellenőrzésre van szükség.
+
+% \\TODO ?
+
+\subsubsection{Create-VM.ps1}
+
+A script egy az argumentumaiban szereplő paramétereknek megfelelő VM konténert hoz létre. A beállításokat tekintve, ha valamelyik paraméter nincs felülbírálva az argumentumokban, akkor a korábban már taglalt alapbeállítás kerül felhasználásra.
+
+A script úgy lett elkészítve, hogy képes felismerni, ha valamelyik lemez VHDX állománya már létezik.
+
+
 % \\TODO
+
+
+
 
 \subsubsection{Post-Configuration.ps1}
 % \\TODO
