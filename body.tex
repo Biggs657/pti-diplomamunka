@@ -9,7 +9,8 @@
 \usepackage{textcomp}
 \usepackage{pdfpages} 
 \usepackage{graphicx}
-\usepackage[none]{hyphenat}
+%\usepackage[none]{hyphenat}
+\usepackage[magyar]{babel}
 \graphicspath{ {images/} }
 \usepackage[
 backend=biber,
@@ -59,17 +60,73 @@ backend=biber,
 
 \tableofcontents
 
-\chapter{Virtualizáció}
-\noindent Miért jó a virtualizáció. A virtualizált rendszerek előnyei. Modern virtualizációs megoldások
-% \\TODO
+\chapter{Virtualizációról}
+A számítógépek már a kezdetekben is annyira erősek voltak, hogy az átlagos felhasználási módokkal nem lehetett telljesen kiaknázni a számítási telljesítményt, vagy a tárkapacitást.
+Ennek a problémakörnek a megoldására az igény az 1960-as évek közepén kezdett megnövekedni. 
+Az akkori rendszerek single user, single application módban voltak képesek működni. 
+Ez annyit tett, hogy a felhasználónak, ha egyszerre több folyamat futtatására volt szüksége, akkor annyi számítógépet kellett üzemeltetnie. 
+A két éllovas az MIT és az IBM volt, az első kész megoldást azonban az IBM szállította. 
+Az MIT-n akkor nem jól mérték fel a feladat jelentőségét, így nem szenteltek neki kellő figyelmet és elvesztették vezető szerepüket. 
+Az IBM megoldásában egy specializált mainframe rendszert használtak, ahol a felhasználók párhuzamosan tudták futtatni a saját programjaikat.
+A felügyeletre pedig egy parancssor állt rendelkezésre.
+Ez azért volt nagy előre lépés, mert így a felhasználók egymástóll elszeparált módon dolgozhattak.
+Ez volt az első lépcső a virtualizáció mai formálya felé.
+
+A virtualizáció nem csupán az optimálisabb erőforrás elosztáshoz volt szükséges. 
+A minden folyamatra külön kiszolgáló fenntartása komoly feladatok elé állította az üzemeltetésüket végzőket. 
+A szerverek magas száma miatt nagy méretű adaközpontokat kellett építeni, amelyekben az megfelelő körülményeket fenntartani nagyon költséges. 
+A sok különböző szerver üzemeltetése, adminisztatív szempontból sem kisebb feladat. 
+A kezdeti rendszereket nem lehett távolról egyszerűen vezérelni. Léteztek ugyan KVM megoldások amelyekkel limitáltan el lehetett végezni a távoli vezérlés bizonyos lépéseit, de már például a telepítéshez - főleg ha annak fizikai adathordozóról kellett megtörténni - szükséges volt a személyes beavatkozás. 
+A virtualizációs megoldások terjedésének köszönhetően, össze lehet fogni nagyobb csoportokba a szervereket. 
+Aztán ezek felett a csoportok felett lehet definiálni az úgynevezett virtuális gépeket, amelyek osztoznak az erőforrásokon és a virtualizációs megoldástól függően akár mozoghatnak is a fizikai gépek között úgy, hogy a munkafolyamat nem szakad meg.
+
+A fejlesztések azonban nem álltak le és megindultak a kutatások az alkalmazás virtualizáció irányába. 
+Ezen irányú törekvések eredménye lett az egykori Sun Microsystems nevet viselő vállalat fejlesztése a Java. 
+A Java nyelv legnagyobb előnye és egyben hátranya is, hogy bármely gépen elfut amelyen van Java Runtime Environment (JRE). 
+A JRE felel azért, hogy az alkalmazások egy külön virtuális gépben fussanak az operációs rendszeren belül. 
+Így az univerzális nyelven megírt alkalmazások telljesen szeparált, de előre jól tervezhető módon futnak szinte bármilyen hardveren és operációs rendszeren.
+
+Jelenleg a virtualizációs megoldásokat már a biztonság fokozására használják, bővebben a gyártóspecifikus részben taglalom.
 
 \section{On-Premises rendszerek}
 
 \subsection{Microsoft Hyper-V\texttrademark}
+A Microsoft Hyper-V története egészen 1997-ig nyúlik vissza, amikor is még a technológiát a Connectix nevű cég birtokolta. 
+Az első verziós kiadása a Virtual PC-nek még Macintosh platformra készült el. 
+Ezt követte 2001-ben az első Windowsos megjelenés. 
+A Microsoft miután egyértelművé vált, hogy az üzleti felhasználóknak szükségük van virtualizációs megoldásokra 2003-ban megvásárolta a Virtual PC-t és az akkor még nem kiadott Virtual Servert a Connectix-től. 
+A microsoft folytatta mindkét termék fejlesztését. A Virtual PC több frissítésen is átesett mígnem a Hyper-V lenem váltotta 2008-ban. 
+A Virtual Server a kezdetektől fogva a szerver operiációs rendszerek és az üzleti felhasználók igényeinek megfelelően lett fejlesztve. 
+Olyan nem elhanyagolható különbségekkel, hogy a szerver verzión már a kezdetektől fogva az NTFS akkori szabványának megfelelő 2TB-os méretet ki lehetett használni, míg a Virtual PC-n 127GB volt a maximum. 
+A 127GB-os limit a korabeli merevlemezek kialakításából adódott, hiszen a konszumer lemezekben nem volt kontroller így az operációs rendszer nem cellák alapján címezte a lemezt hanem a geometriáját felhasználva térben írta le a helyet, ezt kellett használnia a virtuális lemezeknél is a VPC-nek, hogy az operációs rendszerek működőképesek maradhassanak.
+
+A Microsoft Hyper-V ezzen a néven először a Windows Server 2008 operációs rendszerben debütált. 
+Megjelent belőle ugyanekkor egy ingyenes verzió is Hyper-V Server néven, amely nem volt más mint egy Windows Server 2008 Core edition, a Hyper-V role-al előtelepítve, míg a többi Role letiltásra került.
+A Hyper-V most már minden mai Windows kiadásban rendelkezésre áll. A kezdeti limitált képességeit az újabb verziókkal kibővítette és most már telljesen valós opció a többi nagy virtualizációs platform mellett. 
+
+A későbbiekben bemutatom azon funkcióit amelyek a virtualizált rendszereknél elengedhetelenek és amelyeknek köszönhetően a stabilitás, biztonság, és a skálázhatóság megoldható a Microsoft saját rendszerével annélkül, hogy megvásárolható opció lenne, mint más gyártóknál.
+
+\subsection{Nano Server}
+A Windows Server 2016-os kiadásával debütált, legfőbb célja a minimális overhead melletti üzemeltetés. 
+Ezen kiadás telepítés utáni öszemérete 800 megabájt, grafikus felhasználói felülete nincs így távoli managementre lett tervezve.
+A kis mérete miatt nagyon gyorsan telepíthető, kevesebbszer kell Patchelni a szokásos havi iterációk helyett negyedéves ütemezéssel. 
+Ezzel a rendelkezésre állása megnőtt. 
+Ugyan korlátozott funkciókra használható, de azokon a területeken nagyon fontos előrelépés. 
+Nano Server lehet 
+\begin{itemize}
+	\item Compute Node egy clusterben
+	\item Scale-Out file serverben Storage Host
+	\item DNS szerver
+	\item IIS Webszerver
+	\item Containerben futó alkalmazás gazdagép
+\end{itemize}
 
 \subsubsection{Deduplikáció}
-\noindent
-A Microsoft a Windows Server 2012 szerver verzióban jelentette be a Deduplikációt. A deduplikáció az a folyamat amely feldolgozza az engedélyezett lemezek tartalmát és egyező adatblokkokat csak egyszer tárol le. Az ismétlődő blokkok esetén már csak referenciákat hagy. Ezzel a megoldással nagyon jó hatásfokkal lehet tárolóhelyet megtakarítani. A legjobban deduplikálható adatok a Virtualised Desktop Infrastructure - későbbiekben VDI rendszerek - amelyek esetén az operációs rendszer a hozzátartoztó frissítési csomagok, a feltelepített alkalmazások alapfileai többnyire minden rendszeren megegyeznek. Amennyiben a virtuális gépeken nagyon kevés egyedi file és telepített alkalmazás található úgy a deduplikációs ráta elérheti akár a 90\%-ot is.
+A Microsoft a Windows Server 2012 szerver verzióban jelentette be a Deduplikációt. 
+A deduplikáció az a folyamat amely feldolgozza az engedélyezett lemezek tartalmát és egyező adatblokkokat csak egyszer tárol le. Az ismétlődő blokkok esetén már csak referenciákat hagy. 
+Ezzel a megoldással nagyon jó hatásfokkal lehet tárolóhelyet megtakarítani. 
+A legjobban deduplikálható adatok a Virtualised Desktop Infrastructure - későbbiekben VDI rendszerek - amelyek esetén az operációs rendszer a hozzátartoztó frissítési csomagok, a feltelepített alkalmazások alapfileai többnyire minden rendszeren megegyeznek. 
+Amennyiben a virtuális gépeken nagyon kevés egyedi file és telepített alkalmazás található úgy a deduplikációs ráta elérheti akár a 90\%-ot is.
 
 %\\TODO kifejteni képekkel
 
@@ -78,44 +135,44 @@ A Microsoft a Windows Server 2012 szerver verzióban jelentette be a Deduplikác
 %\\TODO
 
 \subsection{VMWare ESX \textsuperscript{\textregistered}}
-\noindent
+
 
 \subsection{Oracle\textsuperscript{\textregistered} VM}
-\noindent
+
 
 \section{Cloud megoldások}
 \subsection{Microsoft Azure}
-\noindent
+
 
 \subsection{VMWare Cloud}
-\noindent
+
 
 \subsection{Oracle Cloud}
-\noindent
+
 
 \section{Platformok összehasonlítása}
-\noindent
+
 
 \chapter{Esettanulmány}
 \section{Igényfelmérés}
-\noindent
+
 
 \section{Ajánlat}
-\noindent
+
 
 \section{Migráció cloudba}
-\noindent
+
 
 \chapter{Esettanulmány háttércég}
 
 \section{Architektúra}
 
-\noindent Architektúrális szempontból Intel alapú szervereket használtam. A fejlesztői és tesztelői környezet alapját 2 db Dell PowerEdge R710-es szerver adta. A szerverek a munka ideje alatt egyenként 2 db Intel{\textsuperscript{\textregistered}} Xeon{\textsuperscript{\textregistered}} E6545 processzorral (6 mag 12 HT szál), 96 GB DDR3 ECC RAM-al, 2x64 GB Rendszer lemezekkel illetve 2x136 GB adatlemezzel volt ellátva. A kettő szerver egy failover clusterben üzemelt. A rendszer és az adat lemezek RAID1-ben üzemeltek az adatvesztés megelőzése és a magas rendelkezésre állás biztosítása érdekében. Az adatlemezek mérete sosem volt gond a Windows Deduplikációs megoldása miatt.
+Architektúrális szempontból Intel alapú szervereket használtam. A fejlesztői és tesztelői környezet alapját 2 db Dell PowerEdge R710-es szerver adta. A szerverek a munka ideje alatt egyenként 2 db Intel{\textsuperscript{\textregistered}} Xeon{\textsuperscript{\textregistered}} E6545 processzorral (6 mag 12 HT szál), 96 GB DDR3 ECC RAM-al, 2x64 GB Rendszer lemezekkel illetve 2x136 GB adatlemezzel volt ellátva. A kettő szerver egy failover clusterben üzemelt. A rendszer és az adat lemezek RAID1-ben üzemeltek az adatvesztés megelőzése és a magas rendelkezésre állás biztosítása érdekében. Az adatlemezek mérete sosem volt gond a Windows Deduplikációs megoldása miatt.
 
-\noindent
+
 A rendszereinket központilag nem menedzselt, de egységes alapkonfigurációval látjuk el annak érdekében, ha az ügyfélnek segítségre lenne szüksége. 
 
-\noindent
+
 A megépített rendszerben használt alapkonfiguráció:
 \begin{itemize}
 	\item Processzor: 2 mag
@@ -127,9 +184,8 @@ A megépített rendszerben használt alapkonfiguráció:
 
 \subsubsection{A mester image használata}
 
-\noindent A mester image előállítása nagyban meggyorsítja a megrendelt rendszerek üzembehelyezését. Alapvetően két nagy irányzatot lehet felismerni ezen megoldások terén. 
+A mester image előállítása nagyban meggyorsítja a megrendelt rendszerek üzembehelyezését. Alapvetően két nagy irányzatot lehet felismerni ezen megoldások terén. 
 
-\noindent
 Az első megoldás amikor már egy telljesen kész rendszert tartalmazó de syspreppelt virtuális merevlemezt másolunk át a konténer mappájába. Majd azt a virtuális gép konfigurációjakor becsatoljuk és már indítható is rendszer. Ezek után összesen a végfelhasználó szerződést kell elfogadnunk és már használatba is vehetjük a gépünket. Amelyet át kell nevezni, be kell állítani számára a megfelelő IP konfigurációt és már át is adható a felhasználónak. 
 
  
@@ -144,10 +200,10 @@ Az első megoldás amikor már egy telljesen kész rendszert tartalmazó de sysp
 A másik irányzat amikor a Microsoft Deployment Toolkitet használjuk.
 
 \section{Automatizált megoldások}
-\noindent
+
 
 \subsection{On-prem}
-\noindent
+
 
 Az automatizált rendszer első és lefontosabb építőköve a gyors virtális gépek elkészítése. Mivel az esettanulmányban egy szolgáltató céget tételeztem fel, így fontos volt, hogy minél kevesebb módon, lehetőleg telljesen automatikusan lehessen legyártani az igényelt virtális gépeket. 
 
