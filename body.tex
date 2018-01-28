@@ -10,6 +10,7 @@
 \usepackage{pdfpages} 
 \usepackage{graphicx}
 \usepackage[magyar]{babel}
+\usepackage{t1enc}
 \usepackage{indentfirst}
 \usepackage[shortcuts]{extdash}
 \graphicspath{ {images/} }
@@ -132,14 +133,45 @@ A Microsoft a Windows Server 2012 szerver verzióban jelentette be a Deduplikác
 A deduplikáció az a folyamat amely feldolgozza az engedélyezett lemezek tartalmát és egyező adatblokkokat csak egyszer tárol le. Az ismétlődő blokkok esetén már csak referenciákat hagy. 
 Ezzel a megoldással nagyon jó hatásfokkal lehet tárolóhelyet megtakarítani. 
 A legjobban deduplikálható adatok a Virtualised Desktop Infrastructure -- későbbiekben VDI rendszerek -- amelyek esetén az operációs rendszer a hozzátartoztó frissítési csomagok, a feltelepített alkalmazások alapfáljai többnyire minden rendszeren megegyeznek. 
-Amennyiben a virtuális gépeken nagyon kevés egyedi file és telepített alkalmazás található úgy a deduplikációs ráta elérheti akár a 80\%\=/ot is, ahogy az a \ref{fig:deduplication-ratio}. ábrán is látható.
+Amennyiben a virtuális gépeken nagyon kevés egyedi file és telepített alkalmazás található úgy a deduplikációs ráta elérheti akár a 80\%\=/ot is, ahogy az a \ref{fig:deduplication_ratio}. ábrán is látható.
 
 \begin{figure}[h]
 \centering
 \includegraphics[width=0.8\textwidth]{deduplication-ratio-sample}
-\caption{Deduplikációs ráta egy Hyper-V szerveren amelyen teszt szerverek futnak Virtuális gépekként}
-\label{fig:deduplication-ratio}
+\caption{Deduplikációs ráta egy Hyper-V szerveren amelyen teszt szerverek futnak virtuális gépekként}
+\label{fig:deduplication_ratio}
 \end{figure}
+
+\subsubsection{Cluster Rolling Upgrades}
+
+A klaszterbe fűzött hostokon futó operációs rendszert lecserélni nem volt egyszerű művelet, mert a Windows nem támogatta egy az egyben a frissítést. Így egy kerülő megoldást kellett használni az In-Place upgradehez. Egy ilyen folyamat a következő lépésekből áll:
+\begin{enumerate}
+	\item Egy node a régi klaszterből való evakuálása
+	\item Az evakuált node újratelepítése az új operációs rendszerrel
+	\item A frissen telepített nodeal, egy gépből álló klaszter létrehozása, a közös storage konfigurálása.
+ 	\item A virtuális gépek migrációja a két cluster között.
+
+Mivel a Hyper-V nem támogat direkt cluster-to-cluster migrációt, ezért a virtuális gépeket először ki kell venni a magas rendelkezésre álló gépek közül, ilyenkor azon a node-on tudnak csak létezni ahol akkor voltak mikor megváltoztattuk a rendelkezésre állási szintjét.
+	\begin{itemize}
+		
+		\item VM eltávolítása a magas rendelkezésre állású gépek közül
+		\item VM migrációja az új clusterre
+		\item VM konfigurálása magas rendelkezésre állásúvá
+	\end{itemize}
+	\item Amikor már minden gépet lemozgattuk a kövekető lepítésre váró gazdagépről, akkor azt lehet újratelepíteni és hozzáadni az új clusterhez.
+	\item Amikor már csak egy node van a régi clusterben de már nincs rajta több virtuális gép, azt a cluster el kell pusztítani, és a gépet újratelepítve be lehet kötni az új clusterbe.
+\end{enumerate}
+
+A Server 2016-ra történő frissítés során a clusterek lehetnek mixed módban. Azaz lehet bennük 2012 R2 és 2016-ot futtató host is. A mixed mód alatt a cluster a 2012 R2-es funkciókészletet használja, amikor befejeződik minden node-on a frissítés, onnantól használhatóvá válnak az új lehetőségek is. Az előzőekben taglaltam, hogy milyen lépések szükségesek ahhoz, hogy rolling upgrade nélkül el lehessen végezni a frissítést kiesés nélkül. 
+Ugyanaz a folyamat rolling updrage használatával:
+\begin{enumerate}
+	\item A kiválaszott nodeon találató VM-ek evakuálása.
+	\item A node újratelepítése 2016-al.
+	\item Az újratelepített node visszacsatlakoztatása a clusterbe. 
+	\item Ugyanezen lépések ismétlése míg az utolsó node is újratelepítésre nem kerül.
+\end{enumerate}
+
+A 2016-ra való frissítést nagyon hamar fogják erőltetni az üzemeltetők, mert a 2016-os Hyper-V a virtuális gép leállítása nélkül képes a kiosztott virtuális processzor magok számának, az allokált memória növelésére és csökkentésére. Eddig ezekhez mindig le kellett állítani a guest gépet. 
 
 \subsubsection{Scale-Out file server}
 
@@ -150,9 +182,23 @@ A Storage Spaces technológia lényege, hogy sok akár különböző lemezt tudj
 
 A Scale-Out File Server képessége, hogy 2 és 8 node közötti failover clustert hosz létre amelyen a megosztott meghajtók ugyanúgy működnek mint a Hyper-V Failover Clusterben a virtuális gépek. Tehát ha valamelyik storage node-ot le kell állítani akkor az ő álltal birtokolt megosztások átkerülnek egy másik nodera, a lemezei vezérlését pedig szintén egy másik node veszi át.
 
+\subsubsection{Storage Spaces Direct}
+
+Windows Server 2016-al debütált megoldás, amely az alacsonyköltségvetésű klaszterek kiépítését segíti elő. A Failover klaszterek alap követelménye, hogy legyen egy közös tárolóhely ahol virtuális gépek lemezfáljai és a konfigurációs fáljuk tárolva van. Így amikor a virtuális gépet mozgatni kell a node-ok között akkor csak az aktuális memória állapotot kell átmásolni az új hostra és már mehet is tovább a munka. 
+A Storage Spaces Direct lényege, hogy a hostok saját beépített lemezeiket használják. A rendszer majd később ezekből a lemezekből készít egy disk poolt, és azon definiálhatóak a tényleges meghajtók. Ezek a meghajtók a kialakítás miatt hibatűrőek, és az adatok úgy vannak elosztva, hogy a munkafolyamat akkor is tud tovább menni, ha az egyik cluster node leáll, vagy leszakad a hálózatról.
+A rendszer bármikor bővíthető mert a háttérben a Scale-Out file server adja a megoldást.
+
+\subsubsection{Storage Replica}
+
+Windows Server 2012R2-től elérhető funkció a Hyper-V replica. A replikációnak köszönhetően fenn lehet tartani egy telljesértékű másolatát egy virtuális gépnek, vagy gépe halmazának. A replikációs intervallum 1 óra és 5 perc között konfigurálható, azaz ha az eredeti gép megáll, vagy valamilyen probléma adódik vele, akkor a replikát el lehet indítani ezáltal maximum a konfigurált replikációs időtartamnyi munkafolyamat elvesztésével kell számolni. Ezzel a megoldással jól lehet Off-Site backupokat készíteni, akár Azure cloudba is.
+
+A Storage Replica az Hyper-V replica másolata, csak itt a SoFS meghajtóit lehet biztonságosan tükrözni egy másik példányra.
+
 \subsubsection{Virtual Network}
 
-%\\TODO
+A Hypervisorok már a kezdetektől fogva képesek voltak a virtuális hálózatok kezelésére. A hypervisorok képesek a saját fizikai hálózati portjukon keresztül több különböző forgalmat lebonyolítani, plusz a szerver rendszerekben rendelkezésre áll a fizikai hálózati kártyák egy csoportba való összefogása. Ugyan így az átviteli sebességet nem tudjuk agregálni, tehát hiába fogunk össze 4db 10 gigabites hálózati linket akkor nem tudunk egyszerre kifelé 40 gigabittel kommunikálni egy adott host felé, ám ha egy időben 4 különböző hostal szertnénk a kommunikációt végre hajtani akkor az egyéni linkek maximális sebességét tudjuk hozni. 
+
+A virtuális hálózatoknak köszönhetően a hostokon vagy clustereken belül tudunk privát alhálózatok létrehozni amellyel az adatközlést még biztonságosabbá és szeparáltá lehet tenni.
 
 \subsection{VMWare ESX \textsuperscript{\textregistered}}
 
