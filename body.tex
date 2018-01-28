@@ -65,7 +65,7 @@ backend=biber,
 
 \chapter{Virtualizációról}
 
-A számítógépek már a kezdetekben is annyira erősek voltak, hogy az átlagos felhasználási módokkal nem lehetett telljesen kiaknázni a számítási telljesítményt, vagy a tárkapacitást.
+A számítógépek már a kezdetekben is annyira erősek voltak, hogy az átlagos felhasználási módokkal nem lehetett teljesen kiaknázni a számítási teljesítményt vagy a tárkapacitást.
 Ennek a problémakörnek a megoldására az igény az 1960-as évek közepén kezdett megnövekedni. 
 Az akkori rendszerek single user, single application módban voltak képesek működni. 
 Ez annyit tett, hogy a felhasználónak, ha egyszerre több folyamat futtatására volt szüksége, akkor annyi számítógépet kellett üzemeltetnie. 
@@ -73,13 +73,13 @@ A két éllovas az MIT és az IBM volt, az első kész megoldást azonban az IBM
 Az MIT-n akkor nem jól mérték fel a feladat jelentőségét, így nem szenteltek neki kellő figyelmet és elvesztették vezető szerepüket. 
 Az IBM megoldásában egy specializált mainframe rendszert használtak, ahol a felhasználók párhuzamosan tudták futtatni a saját programjaikat.
 A felügyeletre pedig egy parancssor állt rendelkezésre.
-Ez azért volt nagy előre lépés, mert így a felhasználók egymástóll elszeparált módon dolgozhattak.
-Ez volt az első lépcső a virtualizáció mai formálya felé.
+Ez azért volt nagy előre lépés, mert így a felhasználók egymástól elszeparált módon dolgozhattak.
+Ez volt az első lépcső a virtualizáció mai formája felé.
 
 A virtualizáció nem csupán az optimálisabb erőforrás elosztáshoz volt szükséges. 
 A minden folyamatra külön kiszolgáló fenntartása komoly feladatok elé állította az üzemeltetésüket végzőket. 
-A szerverek magas száma miatt nagy méretű adaközpontokat kellett építeni, amelyekben az megfelelő körülményeket fenntartani nagyon költséges. 
-A sok különböző szerver üzemeltetése, adminisztatív szempontból sem kisebb feladat. 
+A szerverek magas száma miatt nagy méretű adaközpontokat kellett építeni, amelyekben a megfelelő körülményeket fenntartani nagyon költséges. 
+A sok különböző szerver üzemeltetése, adminisztratív szempontból sem kisebb feladat. 
 A kezdeti rendszereket nem lehett távolról egyszerűen vezérelni. Léteztek ugyan KVM megoldások amelyekkel limitáltan el lehetett végezni a távoli vezérlés bizonyos lépéseit, de már például a telepítéshez - főleg ha annak fizikai adathordozóról kellett megtörténni - szükséges volt a személyes beavatkozás. 
 A virtualizációs megoldások terjedésének köszönhetően, össze lehet fogni nagyobb csoportokba a szervereket. 
 Aztán ezek felett a csoportok felett lehet definiálni az úgynevezett virtuális gépeket, amelyek osztoznak az erőforrásokon és a virtualizációs megoldástól függően akár mozoghatnak is a fizikai gépek között úgy, hogy a munkafolyamat nem szakad meg.
@@ -88,7 +88,7 @@ A fejlesztések azonban nem álltak le és megindultak a kutatások az alkalmaz�
 Ezen irányú törekvések eredménye lett az egykori Sun Microsystems nevet viselő vállalat fejlesztése a Java. 
 A Java nyelv legnagyobb előnye és egyben hátranya is, hogy bármely gépen elfut amelyen van Java Runtime Environment (JRE). 
 A JRE felel azért, hogy az alkalmazások egy külön virtuális gépben fussanak az operációs rendszeren belül. 
-Így az univerzális nyelven megírt alkalmazások telljesen szeparált, de előre jól tervezhető módon futnak szinte bármilyen hardveren és operációs rendszeren.
+Így az univerzális nyelven megírt alkalmazások teljesen szeparált, de előre jól tervezhető módon futnak szinte bármilyen hardveren és operációs rendszeren.
 
 Jelenleg a virtualizációs megoldásokat már a biztonság fokozására használják, bővebben a gyártóspecifikus részben taglalom.
 
@@ -107,15 +107,15 @@ A 127GB-os limit a korabeli merevlemezek kialakításából adódott, hiszen a k
 
 A Microsoft Hyper-V ezzen a néven először a Windows Server 2008 operációs rendszerben debütált. 
 Megjelent belőle ugyanekkor egy ingyenes verzió is Hyper-V Server néven, amely nem volt más mint egy Windows Server 2008 Core edition, a Hyper-V role-al előtelepítve, míg a többi Role letiltásra került.
-A Hyper-V most már minden mai Windows kiadásban rendelkezésre áll. A kezdeti limitált képességeit az újabb verziókkal kibővítette és most már telljesen valós opció a többi nagy virtualizációs platform mellett. 
+A Hyper-V most már minden mai Windows kiadásban rendelkezésre áll. A kezdeti limitált képességeit az újabb verziókkal kibővítette és most már teljesen valós opció a többi nagy virtualizációs platform mellett. 
 
 A későbbiekben bemutatom azon funkcióit amelyek a virtualizált rendszereknél elengedhetelenek és amelyeknek köszönhetően a stabilitás, biztonság, és a skálázhatóság megoldható a Microsoft saját rendszerével annélkül, hogy megvásárolható opció lenne, mint más gyártóknál.
 
 \subsubsection{Nano Server}
 
-A Windows Server 2016-os kiadásával debütált, legfőbb célja a minimális overhead melletti üzemeltetés. 
-Ezen kiadás telepítés utáni öszemérete 800 megabájt, grafikus felhasználói felülete nincs így távoli managementre lett tervezve.
-A kis mérete miatt nagyon gyorsan telepíthető, kevesebbszer kell Patchelni a szokásos havi iterációk helyett negyedéves ütemezéssel. 
+A Windows Server 2016-os kiadásával debütált és legfőbb célja a minimális overhead melletti üzemeltetés. 
+Ezen kiadás telepítés utáni öszemérete 800MB, grafikus felhasználói felülete nincs így távoli managementre lett tervezve.
+A kis mérete miatt nagyon gyorsan telepíthető, kevesebbszer kell patchelni, a szokásos havi iterációk helyett negyedéves ütemezéssel. 
 Ezzel a rendelkezésre állása megnőtt. 
 Ugyan korlátozott funkciókra használható, de azokon a területeken nagyon fontos előrelépés. 
 Nano Server lehet 
@@ -133,7 +133,7 @@ A Microsoft a Windows Server 2012 szerver verzióban jelentette be a Deduplikác
 A deduplikáció az a folyamat amely feldolgozza az engedélyezett lemezek tartalmát és egyező adatblokkokat csak egyszer tárol le. Az ismétlődő blokkok esetén már csak referenciákat hagy. 
 Ezzel a megoldással nagyon jó hatásfokkal lehet tárolóhelyet megtakarítani. 
 A legjobban deduplikálható adatok a Virtualised Desktop Infrastructure -- későbbiekben VDI rendszerek -- amelyek esetén az operációs rendszer a hozzátartoztó frissítési csomagok, a feltelepített alkalmazások alapfáljai többnyire minden rendszeren megegyeznek. 
-Amennyiben a virtuális gépeken nagyon kevés egyedi file és telepített alkalmazás található úgy a deduplikációs ráta elérheti akár a 80\%\=/ot is, ahogy az a \ref{fig:deduplication_ratio}. ábrán is látható.
+Amennyiben a virtuális gépeken nagyon kevés egyedi fájl és telepített alkalmazás található úgy a deduplikációs ráta elérheti akár a 80\%\=/ot is, ahogy az a \ref{fig:deduplication_ratio}. ábrán is látható.
 
 \begin{figure}[h]
 \centering
@@ -148,26 +148,26 @@ A klaszterbe fűzött hostokon futó operációs rendszert lecserélni nem volt 
 \begin{enumerate}
 	\item Egy node a régi klaszterből való evakuálása
 	\item Az evakuált node újratelepítése az új operációs rendszerrel
-	\item A frissen telepített nodeal, egy gépből álló klaszter létrehozása, a közös storage konfigurálása.
+	\item A frissen telepített node\=/dal, egy gépből álló klaszter létrehozása, a közös storage konfigurálása.
  	\item A virtuális gépek migrációja a két cluster között.
 
-Mivel a Hyper-V nem támogat direkt cluster-to-cluster migrációt, ezért a virtuális gépeket először ki kell venni a magas rendelkezésre álló gépek közül, ilyenkor azon a node-on tudnak csak létezni ahol akkor voltak mikor megváltoztattuk a rendelkezésre állási szintjét.
+Mivel a Hyper-V nem támogat direkt cluster-to-cluster migrációt, ezért a virtuális gépeket először ki kell venni a magas rendelkezésre álló gépek közül. Ilyenkor azon a node\=/on tudnak csak létezni ahol akkor voltak mikor megváltoztattuk a rendelkezésre állás szintjét.
 	\begin{itemize}
 		
 		\item VM eltávolítása a magas rendelkezésre állású gépek közül
 		\item VM migrációja az új clusterre
 		\item VM konfigurálása magas rendelkezésre állásúvá
 	\end{itemize}
-	\item Amikor már minden gépet lemozgattuk a kövekető lepítésre váró gazdagépről, akkor azt lehet újratelepíteni és hozzáadni az új clusterhez.
-	\item Amikor már csak egy node van a régi clusterben de már nincs rajta több virtuális gép, azt a cluster el kell pusztítani, és a gépet újratelepítve be lehet kötni az új clusterbe.
+	\item Amikor már minden gépet lemozgattuk a következő telepítésre váró gazdagépről, akkor azt lehet újratelepíteni és hozzáadni az új clusterhez.
+	\item Amikor már csak egy node van a régi clusterben de már nincs rajta több virtuális gép, azt a cluster-t el kell pusztítani, és a gépet újratelepítve be lehet kötni az új clusterbe.
 \end{enumerate}
 
-A Server 2016-ra történő frissítés során a clusterek lehetnek mixed módban. Azaz lehet bennük 2012 R2 és 2016-ot futtató host is. A mixed mód alatt a cluster a 2012 R2-es funkciókészletet használja, amikor befejeződik minden node-on a frissítés, onnantól használhatóvá válnak az új lehetőségek is. Az előzőekben taglaltam, hogy milyen lépések szükségesek ahhoz, hogy rolling upgrade nélkül el lehessen végezni a frissítést kiesés nélkül. 
+A Server 2016-ra történő frissítés során a clusterek lehetnek mixed módban. Azaz lehet bennük 2012 R2 és 2016-ot futtató host is. A mixed mód alatt a cluster a 2012 R2-es funkciókészletet használja, amikor befejeződik minden node\=/on a frissítés, onnantól használhatóvá válnak az új lehetőségek is. Az előzőekben taglaltam, hogy milyen lépések szükségesek ahhoz, hogy rolling upgrade nélkül el lehessen végezni a frissítést kiesés nélkül. 
 Ugyanaz a folyamat rolling updrage használatával:
 \begin{enumerate}
-	\item A kiválaszott nodeon találató VM-ek evakuálása.
+	\item A kiválaszott node\=/on találató VM-ek evakuálása.
 	\item A node újratelepítése 2016-al.
-	\item Az újratelepített node visszacsatlakoztatása a clusterbe. 
+	\item Az újratelepített node visszacsatlakoztatása a cluster-be. 
 	\item Ugyanezen lépések ismétlése míg az utolsó node is újratelepítésre nem kerül.
 \end{enumerate}
 
@@ -175,28 +175,28 @@ A 2016-ra való frissítést nagyon hamar fogják erőltetni az üzemeltetők, m
 
 \subsubsection{Scale-Out file server}
 
-Világunkban a tárolandó adatmennyiség egyre csak növekszik. Léteznek olyan termékek melyek kimondottan csak az adattárolásra specifikálódtak pl. NetApp Appliances, DellEMC Compellent vagy XtremeIO rendszerei. Ezek nagy telljesítményt tudnak nyújtani az üzemeltetés segítő plusz funkciók mellett, ám ezek bekerülési költsége nagyon magas.
-A Microsoft erre a feladatkörre fejlesztette ki a Storage Spaces technológiát és az arra épülő Scale-Out File Szerver\=/t.
+Világunkban a tárolandó adatmennyiség egyre csak növekszik. Léteznek olyan termékek melyek kimondottan csak az adattárolásra specifikálódtak pl. NetApp Appliances, DellEMC Compellent vagy XtremeIO rendszerei. Ezek nagy telljesítményt tudnak nyújtani az üzemeltetést segítő plusz funkciók mellett, ám ezek bekerülési költsége nagyon magas.
+A Microsoft erre a feladatkörre fejlesztette ki a Storage Spaces technológiát és az arra épülő Scale-Out File Server\=/t.
 \newline
-A Storage Spaces technológia lényege, hogy sok akár különböző lemezt tudjon összefogni egy logikai egységgé, amely fölött virtuális meghajtókat definiál. Ezen virtuális meghajtók nagyon hasonlítanak a RAID tömbök felett definiált meghajtókra, hiszen ugyanúgy meg kell adni a hibatűrését.  A Storage Spaces nagy előnye, hogy képes a virtuális meghajtókat több különböző típusú lemezből elkészíteni, például létrehozhatunk SSD cachel megtámogatott virtuális meghajtót, amely esetén az adatok mozgatását a rendszer végzi az alkalmazások és a felhasználók számára telljesen transzparens módon, hasonló módon mint ahogy az operációs rendszerek a memóriát lapozzák.
+A Storage Spaces technológia lényege, hogy sok, akár különböző lemezt tudjon összefogni egy logikai egységgé, amely fölött virtuális meghajtókat definiál. Ezen virtuális meghajtók nagyon hasonlítanak a RAID tömbök felett definiált meghajtókra, hiszen ugyanúgy meg kell adni a hibatűrését.  A Storage Spaces nagy előnye, hogy képes a virtuális meghajtókat több különböző típusú lemezből elkészíteni. Például létrehozhatunk SSD cache-l megtámogatott virtuális meghajtót, amely esetén az adatok mozgatását a rendszer végzi, az alkalmazások és a felhasználók számára teljesen transzparensen, hasonló módon mint ahogy az operációs rendszerek a memóriát lapozzák.
 
-A Scale-Out File Server képessége, hogy 2 és 8 node közötti failover clustert hosz létre amelyen a megosztott meghajtók ugyanúgy működnek mint a Hyper-V Failover Clusterben a virtuális gépek. Tehát ha valamelyik storage node-ot le kell állítani akkor az ő álltal birtokolt megosztások átkerülnek egy másik nodera, a lemezei vezérlését pedig szintén egy másik node veszi át.
+A Scale-Out File Server képessége, hogy 2 és 8 node közötti failover cluster-t hoz létre amelyen a megosztott meghajtók ugyanúgy működnek mint a Hyper-V Failover Clusterben a virtuális gépek. Tehát ha valamelyik storage node\=/ot le kell állítani akkor az ő álltal birtokolt megosztások átkerülnek egy másik node\=/ra, a lemezei vezérlését pedig szintén egy másik node veszi át.
 
 \subsubsection{Storage Spaces Direct}
 
-Windows Server 2016-al debütált megoldás, amely az alacsonyköltségvetésű klaszterek kiépítését segíti elő. A Failover klaszterek alap követelménye, hogy legyen egy közös tárolóhely ahol virtuális gépek lemezfáljai és a konfigurációs fáljuk tárolva van. Így amikor a virtuális gépet mozgatni kell a node-ok között akkor csak az aktuális memória állapotot kell átmásolni az új hostra és már mehet is tovább a munka. 
-A Storage Spaces Direct lényege, hogy a hostok saját beépített lemezeiket használják. A rendszer majd később ezekből a lemezekből készít egy disk poolt, és azon definiálhatóak a tényleges meghajtók. Ezek a meghajtók a kialakítás miatt hibatűrőek, és az adatok úgy vannak elosztva, hogy a munkafolyamat akkor is tud tovább menni, ha az egyik cluster node leáll, vagy leszakad a hálózatról.
-A rendszer bármikor bővíthető mert a háttérben a Scale-Out file server adja a megoldást.
+Windows Server 2016-al debütált megoldás, amely az alacsonyköltségvetésű klaszterek kiépítését segíti elő. A Failover klaszterek alap követelménye, hogy legyen egy közös tárolóhely ahol virtuális gépek lemezfáljai és a konfigurációs fáljuk tárolva van. Így amikor a virtuális gépet mozgatni kell a node\=/ok között akkor csak az aktuális memória állapotot kell átmásolni az új hostra és már mehet is tovább a munka. 
+A Storage Spaces Direct lényege, hogy a hostok saját beépített lemezeiket használják. A rendszer majd később ezekből a lemezekből készít egy disk poolt, és azon definiálhatóak a tényleges meghajtók. Ezek a meghajtók a kialakítás miatt hibatűrőek, és az adatok úgy vannak elosztva, hogy a munkafolyamat akkor is tud tovább menni, ha az egyik cluster node leáll vagy leszakad a hálózatról.
+A rendszer bármikor bővíthető mert a háttérben a SoFS adja a megoldást.
 
 \subsubsection{Storage Replica}
 
-Windows Server 2012R2-től elérhető funkció a Hyper-V replica. A replikációnak köszönhetően fenn lehet tartani egy telljesértékű másolatát egy virtuális gépnek, vagy gépe halmazának. A replikációs intervallum 1 óra és 5 perc között konfigurálható, azaz ha az eredeti gép megáll, vagy valamilyen probléma adódik vele, akkor a replikát el lehet indítani ezáltal maximum a konfigurált replikációs időtartamnyi munkafolyamat elvesztésével kell számolni. Ezzel a megoldással jól lehet Off-Site backupokat készíteni, akár Azure cloudba is.
+Windows Server 2012R2-től elérhető funkció a Hyper-V replica. A replikációnak köszönhetően fenn lehet tartani egy teljesértékű másolatát egy virtuális gépnek vagy gépek halmazának. A replikációs intervallum 1 óra és 5 perc között konfigurálható, azaz ha az eredeti gép megáll vagy valamilyen probléma adódik vele, akkor a replikát el lehet indítani ezáltal maximum a konfigurált replikációs időtartamnyi munkafolyamat elvesztésével kell számolni. Ezzel a megoldással jól lehet Off-Site backup-okat készíteni, akár Azure Cloud-ba is.
 
-A Storage Replica az Hyper-V replica másolata, csak itt a SoFS meghajtóit lehet biztonságosan tükrözni egy másik példányra.
+A Storage Replica az Hyper-V Replica másolata, csak itt a SoFS meghajtóit lehet biztonságosan tükrözni egy másik példányra.
 
 \subsubsection{Virtual Network}
 
-A Hypervisorok már a kezdetektől fogva képesek voltak a virtuális hálózatok kezelésére. A hypervisorok képesek a saját fizikai hálózati portjukon keresztül több különböző forgalmat lebonyolítani, plusz a szerver rendszerekben rendelkezésre áll a fizikai hálózati kártyák egy csoportba való összefogása. Ugyan így az átviteli sebességet nem tudjuk agregálni, tehát hiába fogunk össze 4db 10 gigabites hálózati linket akkor nem tudunk egyszerre kifelé 40 gigabittel kommunikálni egy adott host felé, ám ha egy időben 4 különböző hostal szertnénk a kommunikációt végre hajtani akkor az egyéni linkek maximális sebességét tudjuk hozni. 
+A Hypervisor-ok már a kezdetektől fogva képesek voltak a virtuális hálózatok kezelésére. Továbbá képesek a saját fizikai hálózati portjukon keresztül több különböző forgalmat lebonyolítani, plusz a szerver rendszerekben rendelkezésre áll a fizikai hálózati kártyák egy csoportba való összefogása. Ugyan így az átviteli sebességet nem tudjuk agregálni, tehát hiába fogunk össze 4db 10Gbps hálózati linket akkor nem tudunk egyszerre kifelé 40Gbps-el kommunikálni egy adott host felé, ám ha egy időben 4 különböző hostal szeretnénk a kommunikációt végre hajtani akkor az egyéni linkek maximális sebességét tudjuk hozni. 
 
 A virtuális hálózatoknak köszönhetően a hostokon vagy clustereken belül tudunk privát alhálózatok létrehozni amellyel az adatközlést még biztonságosabbá és szeparáltá lehet tenni.
 
@@ -252,7 +252,7 @@ A megépített rendszerben használt alapkonfiguráció:
 
 A mester image előállítása nagyban meggyorsítja a megrendelt rendszerek üzembehelyezését. Alapvetően két nagy irányzatot lehet felismerni ezen megoldások terén. 
 
-Az első megoldás amikor már egy telljesen kész rendszert tartalmazó de syspreppelt virtuális merevlemezt másolunk át a konténer mappájába. Majd azt a virtuális gép konfigurációjakor becsatoljuk és már indítható is rendszer. Ezek után összesen a végfelhasználó szerződést kell elfogadnunk és már használatba is vehetjük a gépünket. Amelyet át kell nevezni, be kell állítani számára a megfelelő IP konfigurációt és már át is adható a felhasználónak. 
+Az első megoldás amikor már egy teljesen kész rendszert tartalmazó de sysprep-elt virtuális merevlemezt másolunk át a konténer mappájába. Majd azt a virtuális gép konfigurációjakor becsatoljuk és már indítható is a rendszer. Ezek után összesen a végfelhasználói szerződést kell elfogadnunk és már használatba is vehetjük a gépünket. Amelyet át kell nevezni, be kell állítani számára a megfelelő IP konfigurációt és már át is adható a felhasználónak. 
 
  
 % \\TODO  A két irányzat alapvető lépéseit illetve a továbbiakban szükséges folyamatokat bemutatni
@@ -269,17 +269,17 @@ A másik irányzat amikor a Microsoft Deployment Toolkitet használjuk.
 \section{Automatizált megoldások}
 
 
-\subsection{On-prem}
+\subsection{On-Premisess}
 
 
-Az automatizált rendszer első és lefontosabb építőköve a gyors virtális gépek elkészítése. Mivel az esettanulmányban egy szolgáltató céget tételeztem fel, így fontos volt, hogy minél kevesebb módon, lehetőleg telljesen automatikusan lehessen legyártani az igényelt virtális gépeket. 
+Az automatizált rendszer első és lefontosabb építőköve a gyors virtuális gépek elkészítése. Mivel az esettanulmányban egy szolgáltató céget tételeztem fel, így fontos volt, hogy minél kevesebb módon, lehetőleg teljesen automatikusan lehessen legyártani az igényelt virtális gépeket. 
 
 \subsubsection{Provision-ObjectsForCompany.ps1}
 Egy gyűjtő kód amely megfelelően paraméterezve elvégzni a telljes virtális gép létrehozás lépéseit. 
 A következőkben taglalt scripteket hívja meg. 
-A kódok végrehajtása az előkövetleményeknek megfelelően történik:
+A kódok végrehajtása az előkövetelményeknek megfelelően történik:
 \begin{enumerate}
-	\item VIrtuális Switch létrehozása ( Crete-NewVirtualSwitch.ps1 )
+	\item Virtuális Switch létrehozása ( Crete-NewVirtualSwitch.ps1 )
 	\item Viruális gép(ek) létrehozása ( Create-VM.ps1 )
 	\item A virtális gépek hálózatba fűzése ( Set-VMSwitchForVM.ps1 )
 \end{enumerate}
@@ -288,7 +288,7 @@ A kódok végrehajtása az előkövetleményeknek megfelelően történik:
 
 \subsubsection{Create-NewVirtualSwitch.ps1}
 
-Virtuális switchek tulajdonságát korábban taglaltam. A cégnél a megrendelők rendszerei telljesen elválastott rendszerek, hacsak a megrendelők másképp nem rendelkeznek. Ellenben a virtális gépek amelyek egy megrendelőhöz kötődnek egymással közös hálózaton vannak. Szolgáltatói oldalon a cégekhez tartozó erőforrások azonosítása érdekében a megrendelő cég nevét eléfűzöm az erőforrás nevézhez. Amennyiben már létezik ilyen erőforrás úgy a script küld egy email üzenetet az üzemeltetőnek, hogy manuális ellenőrzésre van szükség.
+Virtuális switchek tulajdonságát korábban taglaltam. A cégnél a megrendelők rendszerei teljesen elszerparált rendszerek, hacsak a megrendelők másképp nem rendelkeznek. Ellenben a virtuális gépek amelyek egy megrendelőhöz kötődnek egymással közös hálózaton vannak. Szolgáltatói oldalon a cégekhez tartozó erőforrások azonosítása érdekében a megrendelő cég nevét eléfűzöm az erőforrás nevéhez. Amennyiben már létezik ilyen erőforrás úgy a script küld egy email üzenetet az üzemeltetőnek, hogy manuális ellenőrzésre van szükség.
 
 % \\TODO ?
 
