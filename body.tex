@@ -9,8 +9,9 @@
 \usepackage{textcomp}
 \usepackage{pdfpages} 
 \usepackage{graphicx}
-%\usepackage[none]{hyphenat}
 \usepackage[magyar]{babel}
+\usepackage{indentfirst}
+\usepackage[shortcuts]{extdash}
 \graphicspath{ {images/} }
 \usepackage[
 backend=biber,
@@ -38,6 +39,7 @@ backend=biber,
 \renewcommand\cftchapdotsep{\cftdotsep} % chapter, és irodalomjegyzék szöveg utáni pontok
 \newcommand{\sectionbreak}{\clearpage} % címsorok új oldalon
 
+
 \addbibresource{bibliography.bib}
 
 % help section - to be deleted
@@ -61,6 +63,7 @@ backend=biber,
 \tableofcontents
 
 \chapter{Virtualizációról}
+
 A számítógépek már a kezdetekben is annyira erősek voltak, hogy az átlagos felhasználási módokkal nem lehetett telljesen kiaknázni a számítási telljesítményt, vagy a tárkapacitást.
 Ennek a problémakörnek a megoldására az igény az 1960-as évek közepén kezdett megnövekedni. 
 Az akkori rendszerek single user, single application módban voltak képesek működni. 
@@ -91,6 +94,7 @@ Jelenleg a virtualizációs megoldásokat már a biztonság fokozására haszná
 \section{On-Premises rendszerek}
 
 \subsection{Microsoft Hyper-V\texttrademark}
+
 A Microsoft Hyper-V története egészen 1997-ig nyúlik vissza, amikor is még a technológiát a Connectix nevű cég birtokolta. 
 Az első verziós kiadása a Virtual PC-nek még Macintosh platformra készült el. 
 Ezt követte 2001-ben az első Windowsos megjelenés. 
@@ -106,7 +110,8 @@ A Hyper-V most már minden mai Windows kiadásban rendelkezésre áll. A kezdeti
 
 A későbbiekben bemutatom azon funkcióit amelyek a virtualizált rendszereknél elengedhetelenek és amelyeknek köszönhetően a stabilitás, biztonság, és a skálázhatóság megoldható a Microsoft saját rendszerével annélkül, hogy megvásárolható opció lenne, mint más gyártóknál.
 
-\subsection{Nano Server}
+\subsubsection{Nano Server}
+
 A Windows Server 2016-os kiadásával debütált, legfőbb célja a minimális overhead melletti üzemeltetés. 
 Ezen kiadás telepítés utáni öszemérete 800 megabájt, grafikus felhasználói felülete nincs így távoli managementre lett tervezve.
 A kis mérete miatt nagyon gyorsan telepíthető, kevesebbszer kell Patchelni a szokásos havi iterációk helyett negyedéves ütemezéssel. 
@@ -122,13 +127,28 @@ Nano Server lehet
 \end{itemize}
 
 \subsubsection{Deduplikáció}
+
 A Microsoft a Windows Server 2012 szerver verzióban jelentette be a Deduplikációt. 
 A deduplikáció az a folyamat amely feldolgozza az engedélyezett lemezek tartalmát és egyező adatblokkokat csak egyszer tárol le. Az ismétlődő blokkok esetén már csak referenciákat hagy. 
 Ezzel a megoldással nagyon jó hatásfokkal lehet tárolóhelyet megtakarítani. 
-A legjobban deduplikálható adatok a Virtualised Desktop Infrastructure - későbbiekben VDI rendszerek - amelyek esetén az operációs rendszer a hozzátartoztó frissítési csomagok, a feltelepített alkalmazások alapfileai többnyire minden rendszeren megegyeznek. 
-Amennyiben a virtuális gépeken nagyon kevés egyedi file és telepített alkalmazás található úgy a deduplikációs ráta elérheti akár a 90\%-ot is.
+A legjobban deduplikálható adatok a Virtualised Desktop Infrastructure -- későbbiekben VDI rendszerek -- amelyek esetén az operációs rendszer a hozzátartoztó frissítési csomagok, a feltelepített alkalmazások alapfáljai többnyire minden rendszeren megegyeznek. 
+Amennyiben a virtuális gépeken nagyon kevés egyedi file és telepített alkalmazás található úgy a deduplikációs ráta elérheti akár a 80\%\=/ot is, ahogy az a \ref{fig:deduplication-ratio}. ábrán is látható.
 
-%\\TODO kifejteni képekkel
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.8\textwidth]{deduplication-ratio-sample}
+\caption{Deduplikációs ráta egy Hyper-V szerveren amelyen teszt szerverek futnak Virtuális gépekként}
+\label{fig:deduplication-ratio}
+\end{figure}
+
+\subsubsection{Scale-Out file server}
+
+Világunkban a tárolandó adatmennyiség egyre csak növekszik. Léteznek olyan termékek melyek kimondottan csak az adattárolásra specifikálódtak pl. NetApp Appliances, DellEMC Compellent vagy XtremeIO rendszerei. Ezek nagy telljesítményt tudnak nyújtani az üzemeltetés segítő plusz funkciók mellett, ám ezek bekerülési költsége nagyon magas.
+A Microsoft erre a feladatkörre fejlesztette ki a Storage Spaces technológiát és az arra épülő Scale-Out File Szerver\=/t.
+\newline
+A Storage Spaces technológia lényege, hogy sok akár különböző lemezt tudjon összefogni egy logikai egységgé, amely fölött virtuális meghajtókat definiál. Ezen virtuális meghajtók nagyon hasonlítanak a RAID tömbök felett definiált meghajtókra, hiszen ugyanúgy meg kell adni a hibatűrését.  A Storage Spaces nagy előnye, hogy képes a virtuális meghajtókat több különböző típusú lemezből elkészíteni, például létrehozhatunk SSD cachel megtámogatott virtuális meghajtót, amely esetén az adatok mozgatását a rendszer végzi az alkalmazások és a felhasználók számára telljesen transzparens módon, hasonló módon mint ahogy az operációs rendszerek a memóriát lapozzák.
+
+A Scale-Out File Server képessége, hogy 2 és 8 node közötti failover clustert hosz létre amelyen a megosztott meghajtók ugyanúgy működnek mint a Hyper-V Failover Clusterben a virtuális gépek. Tehát ha valamelyik storage node-ot le kell állítani akkor az ő álltal birtokolt megosztások átkerülnek egy másik nodera, a lemezei vezérlését pedig szintén egy másik node veszi át.
 
 \subsubsection{Virtual Network}
 
@@ -190,7 +210,8 @@ Az első megoldás amikor már egy telljesen kész rendszert tartalmazó de sysp
 
  
 % \\TODO  A két irányzat alapvető lépéseit illetve a továbbiakban szükséges folyamatokat bemutatni
-\begin{figure}[t]
+\begin{figure}[h]
+\centering
 \includegraphics[width=0.8\textwidth]{generation_selection}
 \caption{Generáció választás Hyper-V managerből készített virtuális gép esetén}
 \label{fig:gen_selection}
