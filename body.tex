@@ -65,7 +65,7 @@ backend=biber,
 
 \chapter{Virtualizációról}
 
-A számítógépek már a kezdetekben is annyira erősek voltak, hogy az átlagos felhasználási módokkal nem lehetett teljesen kiaknázni a számítási teljesítményt vagy a tárkapacitást.
+A számítógépek már a kezdetekben is annyira erősek voltak, hogy átlagos felhasználási módokkal nem lehetett teljesen kiaknázni a számítási teljesítményt vagy a tárkapacitást.
 Ennek a problémakörnek a megoldására az igény az 1960-as évek közepén kezdett megnövekedni. 
 Az akkori rendszerek single user, single application módban voltak képesek működni. 
 Ez annyit tett, hogy a felhasználónak, ha egyszerre több folyamat futtatására volt szüksége, akkor annyi számítógépet kellett üzemeltetnie. 
@@ -78,9 +78,9 @@ Ez volt az első lépcső a virtualizáció mai formája felé.
 
 A virtualizáció nem csupán az optimálisabb erőforrás elosztáshoz volt szükséges. 
 A minden folyamatra külön kiszolgáló fenntartása komoly feladatok elé állította az üzemeltetésüket végzőket. 
-A szerverek magas száma miatt nagy méretű adaközpontokat kellett építeni, amelyekben a megfelelő körülményeket fenntartani nagyon költséges. 
+A szerverek magas száma miatt nagy méretű adaközpontokat kell építeni, amelyekben a megfelelő körülményeket fenntartani nagyon költséges. 
 A sok különböző szerver üzemeltetése, adminisztratív szempontból sem kisebb feladat. 
-A kezdeti rendszereket nem lehett távolról egyszerűen vezérelni. Léteztek ugyan KVM megoldások amelyekkel limitáltan el lehetett végezni a távoli vezérlés bizonyos lépéseit, de már például a telepítéshez - főleg ha annak fizikai adathordozóról kellett megtörténni - szükséges volt a személyes beavatkozás. 
+A kezdeti rendszereket nem lehett távolról egyszerűen vezérelni. Léteztek ugyan KVM megoldások amelyekkel limitáltan el lehetett végezni a távoli vezérlés bizonyos lépéseit, de már például a telepítéshez - főleg ha annak fizikai adathordozóról kellett megtörténni - szükséges volt a fizikai hozzáférés. 
 A virtualizációs megoldások terjedésének köszönhetően, össze lehet fogni nagyobb csoportokba a szervereket. 
 Aztán ezek felett a csoportok felett lehet definiálni az úgynevezett virtuális gépeket, amelyek osztoznak az erőforrásokon és a virtualizációs megoldástól függően akár mozoghatnak is a fizikai gépek között úgy, hogy a munkafolyamat nem szakad meg.
 
@@ -90,7 +90,7 @@ A Java nyelv legnagyobb előnye és egyben hátranya is, hogy bármely gépen el
 A JRE felel azért, hogy az alkalmazások egy külön virtuális gépben fussanak az operációs rendszeren belül. 
 Így az univerzális nyelven megírt alkalmazások teljesen szeparált, de előre jól tervezhető módon futnak szinte bármilyen hardveren és operációs rendszeren.
 
-Jelenleg a virtualizációs megoldásokat már a biztonság fokozására használják, bővebben a gyártóspecifikus részben taglalom.
+Jelenleg a virtualizációs megoldásokat már a biztonság fokozására használják, ezt bővebben a gyártóspecifikus részben taglalom.
 
 \section{On-Premises rendszerek}
 
@@ -135,7 +135,7 @@ Ezzel a megoldással nagyon jó hatásfokkal lehet tárolóhelyet megtakarítani
 A legjobban deduplikálható adatok a Virtualised Desktop Infrastructure -- későbbiekben VDI rendszerek -- amelyek esetén az operációs rendszer a hozzátartoztó frissítési csomagok, a feltelepített alkalmazások alapfáljai többnyire minden rendszeren megegyeznek. 
 Amennyiben a virtuális gépeken nagyon kevés egyedi fájl és telepített alkalmazás található úgy a deduplikációs ráta elérheti akár a 80\%\=/ot is, ahogy az a \ref{fig:deduplication_ratio}. ábrán is látható.
 
-\begin{figure}[h]
+\begin{figure}[ht]
 \centering
 \includegraphics[width=0.8\textwidth]{deduplication-ratio-sample}
 \caption{Deduplikációs ráta egy Hyper-V szerveren amelyen teszt szerverek futnak virtuális gépekként}
@@ -208,6 +208,7 @@ A virtuális hálózatoknak köszönhetően a hostokon vagy clustereken belül t
 
 \section{Cloud megoldások}
 \subsection{Microsoft Azure}
+\cite{AzureFundamentals}
 
 
 \subsection{VMWare Cloud}
@@ -220,7 +221,29 @@ A virtuális hálózatoknak köszönhetően a hostokon vagy clustereken belül t
 
 
 \chapter{Esettanulmány}
+
+A dolgozat megírásakor nem állt rendelkezésre, olyan alany akinek az esetét fel lehetett volna dolgozni, így egy feltételezett igénylőt alkottam meg. 
+
+Az igénylőt a manapság igen divatos Start-Up cégek mintájára alkottam meg. Egy ilyen cégnél fontos, hogy minél alacsonyabb legyen a kezdeti kiadás mértéke. Számukra ezért lehet előnyös egy hosting céghez fordulni. A webfejlesztéssel foglalkozó személyeknek úgy sem idegen az ilyesféle megoldás. Az igénylő a megkeresésekor elmondta még, hogy szeretnének mobil alkalmazás fejlesztéssel, és Android egyedi rom-ok gyártásával foglalkozni. De szeretnék, ha mindezt egy központi verziókövető rendszerben tudnák tárolni. 
+
 \section{Igényfelmérés}
+Az ilyen jellegű munkáknál is nagyon fontos az igényfelmérés. Egyrészről szükséges ahhoz, hogy a megrendelő a végén úgy érezze, hogy mindent megkapott amit szerett volna. Másrészről a szolgáltatót is fedezi, mert egy korábban megállapított és közösen elfogadott követelmény rendszernek megfelelő rendszert ad át.
+\newline
+\newline
+Az igényfelmérés több lépcsőből áll. 
+\subsubsection{Elbeszélgetés}
+Ez az első lépése a követelmények felmérésének. Ez a szekció egyszer történik meg, ilyenkor a megrendelő és a szolgáltató egy embere - akik nem feltétlenül rendelkeznek technikai tudással - egy megbeszélés során, összeszedik, hogy mit szeretnének elérni. 
+
+\subsubsection{Technikai feltételek meghatározása}
+Ez a feltárási művelet akár többször is megtörténhet még mielőtt elérnék a végső állapotot. Ebben a szekcióban már technikai megbeszéléseknek is meg kell történni. 
+Meg kell határozni a következő tényezőket:
+\begin{itemize}
+	\item Operációs rendszer meghatározása - ha lényeges a keretrendszer miatt
+	\item A keretrendszer kiválasztása
+	\item A hardver specifikációnak méretezése - fejlesztés, teszt, és élő rendszerekre
+	\item A front-end és back-end rendszerek meghatározása
+	\item Egyéb kapcsolódó szolgáltatások feltárása 
+\end{itemize}
 
 
 \section{Ajánlat}
@@ -250,13 +273,14 @@ A megépített rendszerben használt alapkonfiguráció:
 
 \subsubsection{A mester image használata}
 
-A mester image előállítása nagyban meggyorsítja a megrendelt rendszerek üzembehelyezését. Alapvetően két nagy irányzatot lehet felismerni ezen megoldások terén. 
+A mester image előállítása nagyban meggyorsítja a megrendelt rendszerek üzembehelyezését. Alapvetően két nagy irányzatot érdemes megemlíteni ezen megoldások terén. 
 
-Az első megoldás amikor már egy teljesen kész rendszert tartalmazó de sysprep-elt virtuális merevlemezt másolunk át a konténer mappájába. Majd azt a virtuális gép konfigurációjakor becsatoljuk és már indítható is a rendszer. Ezek után összesen a végfelhasználói szerződést kell elfogadnunk és már használatba is vehetjük a gépünket. Amelyet át kell nevezni, be kell állítani számára a megfelelő IP konfigurációt és már át is adható a felhasználónak. 
+Az első megoldás amikor már egy teljesen kész rendszert tartalmazó de sysprep-elt virtuális merevlemezt másolunk át a konténer mappájába. Majd azt a virtuális gép konfigurációjakor becsatoljuk és már indítható is a rendszer. Ezek után összesen a végfelhasználói szerződést kell elfogadnunk és használatba is vehető a gép. Ezután át kell nevezni, be kell állítani számára a megfelelő IP konfigurációt és át is adható a felhasználónak.
+Ezt a megoldást akkor érdemes használni, ha az alap operációs rendszerre még nagyon sok alkalmazást kell feltelepíteni és azokban módosításokat végrehajtani. Amennyiben ezek a lépések végrehajthatóak egy jól megszerkesztett konfigurációs fájlal és a telepítő képest azt értelmezni akkor használható a másik megközelítés is.  
 
  
 % \\TODO  A két irányzat alapvető lépéseit illetve a továbbiakban szükséges folyamatokat bemutatni
-\begin{figure}[h]
+\begin{figure}[ht]
 \centering
 \includegraphics[width=0.8\textwidth]{generation_selection}
 \caption{Generáció választás Hyper-V managerből készített virtuális gép esetén}
@@ -264,15 +288,21 @@ Az első megoldás amikor már egy teljesen kész rendszert tartalmazó de syspr
 \end{figure}
 
 
-A másik irányzat amikor a Microsoft Deployment Toolkitet használjuk.
+A másik irányzat amikor a Microsoft Deployment Toolkitet használjuk (továbbiakban MDT). Az MDT telljesen más felfogást követ. Itt light-touch megoldásról beszélünk, tehát lényegében egy automatizált telepítő végighalad azon a telepítési lépéseken amelyeket személyesen végigcsinálná a telepítést végző személy. 
+Az MDT nagy előnye, hogy csak azokon a pontokon igényel interakciót, amelyeket nem tud magától meghatározni a rendszer, lehet ilyen az egyedi lokális adminisztártorok beállítása, a számítógép átnevezése. Az MDT telepítések, csoportházirenddel kombinálva közel ugyanazt a végeredményt érhetik el mint a master image-es megoldások. 
+
+% TODO a különböző hardverek esetét kitárgyalni!
+
+A két megoldás közötti legnagyobb különbség ám nem a végeredményben hanem a felhasznált időben rejlik. Az első megoldás esetén annyi időt kell a rendszer telljes beüzemelésére számítani amennyi idő alatt a közös helyről a VM konténer mappájába másolódik a VHDX, és a szükséges beállítások elvégzésre kerülnek. Ezzel szemben a második megoldás időigényesebb, mert ugyan felhasználó interakciót csak nagyon kevés ponton igényel, a telljes telepítési folyamatnak le kell zajlani mire használatba lehet venni a gépet. 
+
+A szolgáltatók ezért inkább az első megoldást szokták választani. Könnyebb gyorsabb és kevesebb erőforrást igényel. Ha valami nagyon egyedit kér a felhasználó akkor lehet megoldást adni arra, hogy elérje a VM konzolját és így magának készíthesse el a telepítést.
 
 \section{Automatizált megoldások}
-
 
 \subsection{On-Premisess}
 
 
-Az automatizált rendszer első és lefontosabb építőköve a gyors virtuális gépek elkészítése. Mivel az esettanulmányban egy szolgáltató céget tételeztem fel, így fontos volt, hogy minél kevesebb módon, lehetőleg teljesen automatikusan lehessen legyártani az igényelt virtális gépeket. 
+Az automatizált rendszer első és lefontosabb építőköve a gyors virtuális gépek elkészítése. Mivel az esettanulmányban egy szolgáltató céget tételeztem fel, így fontos volt, hogy minél kevesebb interakcióval, lehetőleg teljesen automatikusan lehessen legyártani az igényelt virtális gépeket. A virtulális gépek legyártása és managelése megoldható egy webfelületről.
 
 \subsubsection{Provision-ObjectsForCompany.ps1}
 Egy gyűjtő kód amely megfelelően paraméterezve elvégzni a telljes virtális gép létrehozás lépéseit. 
@@ -307,14 +337,101 @@ A script úgy lett elkészítve, hogy képes felismerni, ha valamelyik lemez VHD
 \subsubsection{Post-Configuration.ps1}
 % \\TODO
 
+\subsubsection{Update-WebPage.ps1}
+Mint azt már korábban említettem a rendszer működését egy weboldalon keresztül nyomon lehet követni. A webfelületnek van egy álltalános áttekintő nézete, amely a rendszeradminisztrátor számára ad egy képet pillanatnyi állásról. 
+Biztonsági szempontokbólna a weblapot frissítő kódot nem olvashatja a cluster adatait, így a hostokról a webfelület számára fontos információkat a Get-HostStatistics.ps1 script gyűjti össze majd menti le egy olyan helyre amelyre van olvasási joga a jelenlegi scriptnek. Ezt az adatállományt dolgozza fel és vizualizálja. A webfelületen megjelenik az összes VM fontos tulajdonsága, a cluster kihasználtságára vonatkozó adatok, illetve a hostolt igénylők egymáshoz viszonyított erőforrásigénye.
+
+A HTML kódot a Powershell XML modulján keresztül szerkesztem, a szükséges számításokat a frissítéskor számítja ki a script.
+
+\subsubsection{Get-HostStatistics.ps1}
+Biztonsági szempontból a weboldalt aktualizáló kódnak nincs még olvasási hozzáférése sem a clusterhez, ez a megoldás egyébként garantálja azt is, hogy mindegy hol van a világban a host vagy cluster, ha az a közös tárterületre képes az adatait lementeni beolvasztható a jelenlegi rendszerbe. 
+
+Üzemeltetés szempontjából lényeges, hogy az adott gazdagépek processzora és memória készlete mennyire van kihasználva, ám még fontosabb információ a rendelkezésre álló tárterület. Éppen ezeket az információkat kérdezi le a script és tárolja le. Az adatokat a Powershell objektumokat exportálom XML fáljba, így megőrzök minden információt amelyet később vissza lehet nyerni a feldolgozás során.
+
 \subsection{Cloud}
 \noindent
 
 \chapter{PowerShell}
-\section{Történelme}
-% \\TODO
+A shell mint fogalom az informatikában a kezdetektől fogva létezik. A shell tulajdonképpen nem más, mint egy interfész amely lehetővé teszi a felhasználó és az operációs rendszer közötti interakciót. A shell lényegében nem egy alkalmazás a megkerülhetetlensége miatt, de nagyon hasonló bármely más folyamathoz a rendszerben. A shell-ek attól függően, hogy milyen operációs rendszeren találhatóak lehetnek parancssoros (UNIX, Linux, VMS) vagy grafikus interfészek (Windows vagy Mac OS X). Továbbiakban az angol terminológiából származtatott rövidítéseket fogom használni, a parancssoros felületre a Command-Line Interface azaz CLI-t, míg a grafikus interfészre a Graphical User Interface azaz GUI-t.
+
+Mind a két shell-nek megvan az előnye és a hátránya. Az átlag felhasználó számára a GUI előnyösebb, mert nem igényel annyi előzetes tudást az adott rendszerrel kapcsolatban, elég ha a GUI-k általános használatát ismeri. Ebből kifolyólag nem a fejleszétsükkor nem volt szempont, hogy az egyik parancs kimenetét egy másik fel tudja dolgozni. 
+
+A CLI-nek megvan az a nagy előnye, hogy a parancsok kiementeit egy másik parancs fel tudja dolgozni, ugyanakkor mivel parancssoros felülete van a felhasználónak mélyebb tudással kell rendelkeznie a használatához.
+
+Habár léteznek GUI shell-ek, a shell-t mint fogalmat valamilyen CLI-re használják. Ugyanis a shell programozás is azt a cselekményt takarja amikor a megfelelő parancsok sokaságát összegyűjtjük amint egyébként a CLI-be táplálnánk vagy futtatható állományként átadnánk.
+\cite{WindowsPowerShellUnleashed}
+
+\subsubsection{A shell-ek története}
+Az elsőkörben elterjedten használt shell a Bourne shell volt, amely a UNIX rendszerek alapértelmezett felhasználói felülete is egyben. C fejlesztőknek készítették C fejlesztők, ám mégsem C-szerű szintaxist használ. A Bourne shell egy robusztus megoldás volt amely képes volt csővezetékeket, feltételes és rekurzív szerkezeteket kezelni. A hiányosságai miatt elkészült a C shell-t, ez már tudott parancs aliaszokat, és parancssori szövegszerkesztőt. A korabeli shellek nagy problémája az volt, hogy rengeteget kellett képeni, hogy a kívánt eredményt megkapja a felhasználó. 
+Időközben elkészült a Korn shell aminek a legnagyobb baja az volt, hogy megrendelésre készült és licensz köteles termék volt. Az ingyenes nyílt forráskódú rendszerek számára ez nem volt opció, így a Free Software Foundation égisze alatt megszületett a Bourne Again shell, röviden BASH.
+
+A Microsoft korabeli rendszere a DOS volt. A DOS egyben shell és kernel is, ám tudásban bőven elmaradt a Bash-től. A Microsoft ezután bejelentette a Windows-t amely egy grafikus felhasználó interfész volt. A Windows megjelenésével együtt megérkezett a DOSShell szerű Command Promt (továbbiakban CMD). 
+A CMD nem nyújtott elég nagy rugalmasságot a rendszerüzemeltetők számára, és a Microsoft is belátta ezt. Éppen ezért a Windows 98-ban beépítve érkezett a Windows Script Host-t (WSH). A WSH egy programkönyvtár volt amely lehetőséget adott a scripteknek a Windows alacsonyszintű vezérlésére.
+A WSH legnagyobb előnye volt egyben a legnagyobb hátránya is. Nem volt egy egyértelműen meghatározott nyelve. Lehetett script-eket írni rá VBScript, JScript, Perl, Python, Kixstart és Object REXX nyelveken. Ugyan a nyelvet megválaszhatta a készítő a nyelvhez való környezetet már nem tartalmazta beépítve a Windows. Így nem lehetett garantálni, hogy ugyanaz a kód minden gépen futni fog. A WSH továbbá komoly veszélyforrás is volt, hiszen a scriptek hozzáfértek a Windows minden beállításához, tehát ha a vírusos kód már a gépen volt nem volt semmi ami megakadályozhatta volna a végrehajtódásban.
+
+Mindezen lépések után a Microsoft végre elkészítette a PowerShell-t. A tervezésekor a legfontosabb szempontok a biztonság, a scriptelhetőség és a beépített nyelv voltak. A PowerShell alacsonyszintű hozzáféréssel rendelkezik a .NET Keretrendszeren, a Component Object Modellnek és társaiknak köszönhetően. Az egységessége és robusztusságának köszönhetően a mai napig a legjobb eszköz a rendszer üzemeltetők számára. A sikerét jól mutatja, hogy nem csak a Windows beállításait kezelni képes alap csomagok léteznek, hanem sok gyártó elkészítette a saját megoldásához a PowerShell modult, amelyen keresztül a menedzsment megoldható.
+\cite{WindowsPowerShellUnleashed}
+
+\subsubsection{PowerShell Veriótörténet és azok főbb újdonságai}
+\noindent\textbf{PowerShell 1.0}
+\newline 2003 Szeptemberében mutatták meg először a fejlesztőknek a Professional Developers Conference. 
+Végül 2006 Novemberében megjelent a belépítve a következőkben Windows XP SP2, Windows Server 2003 SP1 és a Windows Vistaban. Opcionális komponensként pedig a Windows Server 2008-hoz is letölthető volt.\\
+\break
+\noindent\textbf{PowerShell 2.0}
+\newline Az első komolyabb funkció csomagot a második főverzió már integrálásra került a Windows 7-be és a Windows Server 2008 R2-be. A Windows XP SP3, Windows Server 2003 SP2 és a Windows Vista SP1 is frissítette a gépre telepített PowerShell-t.
+Ezzel a frissítéssel megjelent lényeges újjítások
+\begin{itemize}
+	\item \textbf{PowerShell remoting}: Innentől a Windows WS-Management szolgáltatásán keresztül meglehetett hívni egy script blockot vagy lehetett nyitni egy távoli powershell session-t és abban ugyanúgy dolgozni mintha a helyi gépen lenne.
+	\item \textbf{Background jobs}: A powershell parancsokat, scripteket a háttérbe lehetett küldeni, amelyeknek ha van kimeneti értéke amelyet nem fájlba akartunk kimenteni, akkor a JobID-t ismerve a kimenetet vissza lehetett nyerni. Ezzel az aszinkron működést igénylő problémákat meg lehetett oldani. Amennyiben egy háttérben futó Job-nak input-ra volt szüksége, úgy annak a végrehajtását addig szüneteltette a rendszer, míg az input bevitelre nem kerül.
+	\item \textbf{Tranzakciók}: A shell innentől alkalmas volt arra, hogy a parancsokat tranzakciós metodológia szerint dolgozza fel. Hasonlóan mint egy adatbáziskezelő rendszer. Ez a végrehajtási módszer szükséges lehet bizonyos Registy-t érintő módosításokra.
+	\item \textbf{Modulok}: A kettes főverziótól bárkinek adott a lehetőség, hogy saját PowerShell modult írjon. A modulok lényegében parancsgyűjtemények. Leggyakrabban a nagyobb gyártók az alkalmazásaik egyszerűbb menedzsmentjéhez, vagy automatizálásához adnak ki ilyen modulokat. De az sem ritka, hogy nagyobb cégeknél az alkalmazottak által sűrűn használt egyedi scriptek, parancsokat egy modulba fogják össze és azt minden gépre szétszórják.
+	\item \textbf{Script debugging}: A scriptek hibakeresésénél alapvető eszköz a brakepoint-ok lehetősége. Brakepointokat lehet hozzárendelni sorokhoz, sorokon belül oszlopokhoz, parancsokhoz, vagy akár egy változó értékének írásához, olvasásához.
+	\item \textbf{Eseménykezelés}: A scriptek innentől hozzárendelhetőek Objektum, PowerShell és WMI eseményekhez, amelyekre a kód adhat választ valósidőben, vagy aszinkron módon.
+	\item \textbf{Windows PowerShell Integrated Scripting Environment (ISE)}: A powershell scriptek készítése vagy nagyobb előzetes tudást igényelt, vagy időigényesebb volt, mert a parancsokat és azoknak a megfelelő kapcsolóit felhasználni nem egyszerű feladat. Az ISE tartalmazza belépítve az összes alap parancsot, szerkesztés közben kódkiegészítéssel és a kapcsolók felajánlásával segíti a felhasználót. Mindezek mellett még szintakszis kiemelést is tartalmaz. Az ISE nagy előnye még hogy a script egyes részeit a beépített konzolon egyből le is lehet futtatni. Ezekből a konzolokból egyszerre maximum 8-at lehet nyitvatartani. 
+	\item \textbf{Network File Transfer}: Out-of-the-Box módon támogatja a BITS fájlátvitelt az eszközök között aszinkron módon.
+	\item \textbf{Out-GridView}: Amennyiben az eredményt, nem az alap karakteres felületen megjelenő módon szeretnénk közölni, van lehetőség a .NET keretrendszer álltal adott WPF GridView-ben ablakban megjeleníteni, amely beépítetten tartalmaz szűrés és rendezés funkciókat, és a végső eredményt le is menthetjük a grafikus felületről is.
+	\item \textbf{Kivételkezelés}: A scriptekben a kivétgelkezelés során a catch ágakon belül egyszerre több különböző kivétel tipust is le lehet kezelni, és létezik finally ág is, ha végképp váratlan típusú esmény következett volna be. 
+	\item \textbf{Block comments}: Innetől lehetőség van blokkokban kommenteket elhelyezni, illetve in-line kommentelésre is. 
+	\item \textbf{Split, Join, @}: Az adatállományokat főként a \textit{String} típust kezelő utasítások közé bekerült a Split és a Join amely tömbelemeket tudott feldarabolni vagy összefűzni. A @ operátorral pedig üres tömböt, lehet létrehozni.
+\end{itemize}
+
+\break
+\noindent\textbf{PowerShell 3.0}
+\newline Beépítve érkezett a Windows 8 és Windows Server 2012 operációs rendszerekben, ugyanakkor letölthető formátumban telepíthető volt a Windows 7 SP1, Windows Server 2008 SP1 és Windows Server 2008 R2 SP1 rendszerekre is. 
+A PowerShell 3.0 már nem ölállóan érkezett hanem egy nagyobb csomag a Windows Management Framework 3.0 részekét. A WMF3 magában hordozta a WinRM-et is, amelly a megnövelt tudású távoli vezérlést tette lehetővé.
+\begin{itemize}
+	\item \textbf{Scheduled jobs}: Ettől a verziótól a PowerShell jobokat már lehetett üzemezni.
+	\item \textbf{Session connectivity}: A PowerShell session-ök érzékenyek voltak a lassú, vagy szakadozó hálózatra. A frissítés után a session-ök folytathatóvá válltak ezzel megoldva az instabil hálózat okozta gondokat.
+	\item \textbf{Improved code writing}: A ISE-t érintette egy kisebb ráncfelvarrás, innentől elérhetővé váltak a párbeszéd ablakok, az előre nem megadott, de kötelező értékkel rendelkező paraméterek beadására. Továbbá bekerültek a snippetek és a kódkiegészítés is sokat javult.
+	\item \textbf{Delegálás}: Adminisztratív feladatokat powershell-en keresztül ki lehetett delegálni olyan felhasználóknak akiknek egyébként nincs megfelelő jogkörük a feladat végrehajtásához. 
+	\item \textbf{Frissíthető help}: A parancsok és scriptek segítség szekcióját most már a shell ablakból lehetett frissíteni, így nem kellett megvárni az újabb kiadását a shell-nek a frissítésekért.
+	\item \textbf{Automatikus modul detektálás}: A korábbi PowerShell verziókban ha egy olyan modulból szeretett volna parancsot hívni a script vagy a felhasználó amely nem az alapcsomag része, akkor azt kézzel Import-Module paranccsal be kellett tölteni a munkamenetbe és csak azután lehetett használni a tartalmát. Azonban a 3.0 főverziótól kezdve, amennyiben a modul telepítve van a shell automatikusan betölti amint az első parancs meghívásra kerül belőle.
+	\item \textbf{Új parancsok}: A Microsoft folyamatosan bővítette a parancsokat amelyekkel a rendszert lehet üzemeltetni. Ezzel a frissítéssel a lemezek, meghajtók kezelésére, a tűzfal és hálózati kapcsolatok beállításának a módosítására és nyomtató menedzsmentre alkalmas parancsok jelentek meg. Ez nagy segítség volt, mert korábban ezeket a beállításokat WMI-on keresztül lehetett elérni. 
+\end{itemize}
+
+\noindent\textbf{PowerShell 4.0}
+\newline A Windows 8.1 és Windows Server 2012 R2-es rendszerekbe beépítve debütált. Természetesen minden korábbi még támogatott Operációs rendszer legfrissebb Service Pack-es verziójára telepíthető volt.
+
+\begin{itemize}
+	\item \textbf{Új házirend}: A PowerShell már a kezdetetkől fogva tartalmazott házirendeket a scriptek futtatásának a korlátozására. A négyes főverziótól kezdve a minimális szint alapértelmezésként, egy távoli számítógép (Domain Controller) álltal aláírt script. Ettől a beállítástól természetesen el lehet térni, ha a felhasználó nem akar minden saját készítésű scriptet aláíratni.
+	\item \textbf{-PipelineVariable kapcsoló}: A csővezetékek kezelése során előfordulhat, hogy valamelyik átadáskori adatállapotot, egy változóban szeretnénk tárolni a későbbi adatmanipuláció vagy feldolgozás végett. Erre adott lehetőséget ez az újdonsága.
+	\item \textbf{Új Hyper-V parancsok}: Többek között most már a Virtuális Switcheket is lehet a shellből kezelni. Ennélkül a funkció nélkül az én dolgozatomban található scriptek sem működnének.
+	\item \textbf{Szűrés és iterációk}: 4.0-tól elérhetővé vált a ciklusoknál a ForEach, amely egy Iterable típusú elemcsoport minden elemét képes bejárni. Ezáltal nagyban megkönnyítve a készítő dolgát, továbbá javítva a scriptek olvashatóságát.
+\end{itemize}
+
+\noindent\textbf{PowerShell 5.0 és 5.1}
+\newline Az 5.0 csak letölthető formában létezett a Windows 10-et kivéve amelybe beépítésre került. Az igazi újdonságot azonban az 5.1-es verzió hozta, amely bejelentésekor két külön ágazat jelent meg. Desktop és a Core verzió. A Desktop verzió a szabványos .NET keretrendszerre épül és beépítve megtalálható a Windows 10 Anniversary Update-ben és Windows Server 2016 Core, Standard, és Datacenter kiadásaiban. Míg a PowerShell Core, a Nano Server-be van előre telepítve. Ez az irányvonal az eleve csökkentett képességű célirányosan létrehozott operációs rendszerhez passzol, csak azok a modulok érhetőek el amelyek a csökkentett utasításkészlethez szükségesek és tartalmazza a .NET Core verzióját is amely tökéletesen elég minden a Nano Server által támogatott szolgáltatásnak.\\
+
+
+\noindent\textbf{PowerShell 6.0}
+\newline A dolgozat készítésekor még nem található beépített módon egyik rendszerben sem. Azonban elérhető minden támogatott Windows Operációs rendszer mellett, macOS-re és UNIX-ra is. Ez az első lépése a Microsoftnak affelé, hogy egy közös menedzsment platformot hozzon létre. Ami kicsit meglepő az eddigi termékpolitikát tekintve, hogy a nem microsoft rendszerekre is ingyenesen elérhető.
+A cross-platform management témakörét ugyan nem most veszi elő a Windows először, hiszen a Windows 10-től ugyan még Beta státuszban de a Bash is elérhető a Microsoft rendszerét futtató gépekre, amennyiben az kilép a fejlesztési státuszból a Shell emulátorokat végre fel lehet számolni.
+
 \section{Programozási paradigmák}
+
+asd
 % \\TODO
+\cite{PowerShellGuidelines}
 
 \addcontentsline{toc}{chapter}{\listfigurename}
 \listoffigures
