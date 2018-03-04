@@ -1,4 +1,4 @@
-\documentclass[12pt,oneside,justify]{book}
+\documentclass[12pt,oneside,justify,table]{book}
 
 \usepackage[utf8]{inputenc}
 \usepackage{mathptmx}
@@ -13,10 +13,10 @@
 \usepackage{t1enc}
 \usepackage{indentfirst}
 \usepackage[shortcuts]{extdash}
+\usepackage[toc,page]{appendix}
+\usepackage{tabularx}
 \graphicspath{ {images/} }
-\usepackage[
-backend=biber,
-]{biblatex}  % irodalomjegyzék
+\usepackage[backend=biber,]{biblatex}  % irodalomjegyzék
 
 \titleformat{\chapter}{\normalfont\huge}{\thechapter.}{20pt}{\huge} % egyedi chapter szöveg
 
@@ -39,7 +39,9 @@ backend=biber,
 \renewcommand\cftchapaftersnum{.} % chapter szám utáni pont
 \renewcommand\cftchapdotsep{\cftdotsep} % chapter, és irodalomjegyzék szöveg utáni pontok
 \newcommand{\sectionbreak}{\clearpage} % címsorok új oldalon
-
+\renewcommand{\appendixname}{Függelék} % Függelék sor átnevezés
+\renewcommand{\appendixpagename}{Függelék} % Függelék oldal átnevezés
+\renewcommand{\appendixtocname}{Függelék} % Függelék tartalomjegyzék bejegyzés átnevezése
 
 \addbibresource{bibliography.bib}
 
@@ -428,12 +430,134 @@ A PowerShell 3.0 már nem ölállóan érkezett hanem egy nagyobb csomag a Windo
 A cross-platform management témakörét ugyan nem most veszi elő a Windows először, hiszen a Windows 10-től ugyan még Beta státuszban de a Bash is elérhető a Microsoft rendszerét futtató gépekre, amennyiben az kilép a fejlesztési státuszból a Shell emulátorokat végre fel lehet számolni.
 
 \section{Programozási paradigmák}
+Mint minden nyelv esetében a PowerShellnél is vannak megkötések. Aki sikeres fejlesztője szeretne lenni, annak ismernie és alkalmaznia kell a következőket.
+\subsection{Kötelező fejlesztési irányelvek}
+Minden PowerShell parancs felépítését tekintve két részből áll, Ige-Főnév alakú. A legszigorúbb feltételek az parancsok első részére vonatkoznak, hiszen itt szeretnénk elérni az egységességet, érdemes az igék ugyanezen alakjait használni. 
+Lásd: \ref{appendix:powershellRequiredVerbs} függelék.
+\subsection{Erősen ajánlott fejlesztési irányelvek}
+\subsection{Ajánlások}
 
-asd
 % \\TODO
 \cite{PowerShellGuidelines}
 
 \addcontentsline{toc}{chapter}{\listfigurename}
 \listoffigures
 \printbibliography[heading=bibintoc,title={Irodalomjegyzék}]
+
+\begin{appendices}
+\chapter{Powershell kötelező igék}
+\label{appendix:powershellRequiredVerbs}
+A következő táblázatok, a Microsoft dokumentációjának a magyarra fordított változatai. \cite{PowerShellGuidelines} \\
+\textbf{Átalános célú igék:} \cite{VerbsCommon}\\
+\rowcolors{2}{blue!25}{gray!10}
+\begin{tabularx}{\linewidth}{l|X}
+\rowcolor{blue!50}
+\textbf{Ige} & \textbf{Felhasználása} \\
+\hline
+Add & Hozzáadás, hozzáfűzés értelemben valamilyen erőforráshoz. \\
+Clear & Eltávolításra minden elemet egy tömbből, vagy változó érték törlésére. \\
+Close & Erőforrás lezárására, elérhetetlenné tételére \\
+Copy & Erőforrás másolára vagy átnevezésére \\
+Enter & Kontextus megnyitására \\
+Exit & Kontextusból való kilépésre \\
+Find & Objektum keresésre \\
+Format & Kimenet formázására \\
+Get & Erőforrás tartalmának, objektumának, gyerekének, tulajdonságainak, kapcsolatainak a lekérdézésére \\
+Hide & Objektum láthatóságának a levételére \\
+Join & Több erőforrás egybeolvasztására \\
+Lock & Erőforrás lezárására \\
+Move & Erőforrás áthelyezésére \\
+New & Új erőforrás létrehozására \\
+Open & Erőforrás megnyitására \\
+Optimize & Erőforrás hatásfokának növelésére \\
+Pop & A Push művelettel elmentett kontextus viszaállítására \\ 
+Pus & Az adott kontextust, aktuális kontextusá való beállításra úgy, hogy meghagyjuk a viszaállítás lehetőségét \\
+Redo & Végrehajtani az adott erőforráson való újravégrehajtáshoz \\
+Remove & Egy gyűjteményből való eltávolításhoz \\
+Rename & Erőforrás átnevezéshez \\
+Resize & Erőforrás átméretezéshez \\
+Search & Erőforrás hivatkozás előállításához olyan módon, hogy az adott erőforrást nem adja vissza \\
+Select & Kiválasztáshoz \\
+Set & Erőforrás tartalmának, objektumának, gyerekének, tulajdonságainak, kapcsolatainak a beállítására \\
+Show & Láthatóvá tételre vagy valamilyen információ megjelenítésére. A Get, Format, és Out igéket lehet egyben kiváltatni vele. \\
+\end{tabularx}
+
+\noindent
+\begin{tabularx}{\linewidth}{l|X}
+\rowcolor{blue!50}
+\textbf{Ige} & \textbf{Felhasználása} \\
+\hline
+Skip & Erőforrás átugrására, azon végrehajtott módosítás nélkül \\
+Split & Objektumok feldarabolására \\
+Step & A következő pontra vagy erőforrásra lépéshez \\
+Swich & Erőforrások közötti váltáshoz \\
+Undo & Visszaállításhoz \\
+Unlock & Erőforrás zárolásának a feloldásához \\
+Whatch & Erőforrás változásainak a figyeléséhez \\
+\end{tabularx}
+\break
+
+\noindent \textbf{Kommunikációhoz kapcsolódó igék:} \cite{VerbsCommunication}\\
+\begin{tabularx}{\linewidth}{l|X}
+\rowcolor{blue!50}
+\textbf{Ige} & \textbf{Felhasználása} \\
+\hline
+Connect & Az elkövetkező műveletek összekapcsolása az erőforrással \\
+Disconnect & A kapcsoaltok megszűntetése az erőforrással \\
+Read & Adat lekérése, olvasása egy tároló médiumról vagy portról \\
+Receive & Adat fogadás egy forrásból \\
+Send & Adat eljutattása valamiylen közvetítő közegen keresztül a célba \\
+Write & Adat írására, kommunikálására \\
+\end{tabularx}
+\break
+
+\noindent \textbf{Adatmanipulációhoz kapcsolódó igék:} \cite{VerbsData}\\
+\begin{tabularx}{\linewidth}{l|X}
+\rowcolor{blue!50}
+\textbf{Ige} & \textbf{Felhasználása} \\
+\hline
+Backup & Adatmentésre \\
+Checkpoint & Jól definiálit állapot jelölésére, amelyre később vissza lehet állni \\
+Compare & Két erőforrás összehasonlítására, és a különbségük előállítására \\
+Compress & Méret csökkentésre , tömörítésre \\
+Convert & Kódolások vagy mértékegységek közötti váltásra \\
+ConvertFom & A főnév által megadott formátumból valamilyen általános formátumba való konvertálásra \\
+ConvertTo & Általános formátumból a főnév által megadottt formátumba való konvertálásra \\
+Dismount & Lecsatlakoztatásra \\
+Edit & Helyben történő módosításhoz \\
+Expand & Kitömörítésre vagy méret növelésre \\
+Export & Az erőforrásról másolat készítésére egy megadott formátum szerint \\
+Group & Összekötésre vagy csoportosításra egy vagy több erőforrás esetén \\
+Import & Erőforrás létrehozásra, amelyet a megadott formátumból olvasunk fel \\
+Initialize & Erőforrás felkészítése a használatra, kezdőérték hozzárendelésre \\
+Limit & Erőforrásokra vonatkozó korlátozások bevezetéséhez \\
+Merge & Több példány egybeolvaszátására \\
+Mount & Hierarchiába csatlakoztatásra \\
+Out & Portra való kiküldésre \\
+Publish & Láthatóvá tételre \\
+Restore & Chekpointra való visszaállásra \\
+Save & Státusz mentésére \\
+Sync & Egy vagy több erőforrás közös állapotra hozására \\
+Unpublish & Erőforrás láthatatlanná, elérhetetlenné tételére \\
+Update & Erőforrás, új elemekkel, vagy biztos forrásból való aktualizálására \\
+\end{tabularx}
+\break
+
+\noindent \textbf{Diagnosztikához kapcsolódó igék:} \cite{VerbsDiagnostic}\\
+\begin{tabularx}{\linewidth}{l|X}
+\rowcolor{blue!50}
+\textbf{Ige} & \textbf{Felhasználása} \\
+\hline
+Debug & A hibakeresés megkönnyítésére vagy probléma jobb megértésére \\
+Measue & Erőforrás státusz, hardverigényének a lekérdezésére \\
+Ping & Erőforrás elérhetőség vizsgálatra \\
+Repair & Hibakeresésre és javításra \\
+Resolve & Névfeloldásra \\
+Test & Validálásra és konzisztencia vizsgálatra \\
+Trace & Műveletkövetésre \\
+\end{tabularx}
+\break
+
+\end{appendices}
+
 \end{document}
