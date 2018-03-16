@@ -38,7 +38,7 @@
 \renewcommand{\listfigurename}{Ábrajegyzék} % ábrajegyzék átnevezés
 \renewcommand\cftchapaftersnum{.} % chapter szám utáni pont
 \renewcommand\cftchapdotsep{\cftdotsep} % chapter, és irodalomjegyzék szöveg utáni pontok
-\newcommand{\sectionbreak}{\clearpage} % címsorok új oldalon
+%\newcommand{\sectionbreak}{\clearpage} % címsorok új oldalon
 \renewcommand{\appendixname}{Függelék} % Függelék sor átnevezés
 \renewcommand{\appendixpagename}{Függelék} % Függelék oldal átnevezés
 \renewcommand{\appendixtocname}{Függelék} % Függelék tartalomjegyzék bejegyzés átnevezése
@@ -132,14 +132,14 @@ Nano Server lehet
 \subsubsection{Deduplikáció}
 
 A Microsoft a Windows Server 2012 szerver verzióban jelentette be a Deduplikációt. 
-A deduplikáció az a folyamat amely feldolgozza az engedélyezett lemezek tartalmát és egyező adatblokkokat csak egyszer tárol le. Az ismétlődő blokkok esetén már csak referenciákat hagy. 
+A deduplikáció az a folyamat amely feldolgozza az engedélyezett lemezek tartalmát és egyező adatblokkokat csak egyszer tárol le. Az ismétlődő blokkok esetén már csak referenciákat hagy, úgy nevezett újraelemzési pontokat. 
 Ezzel a megoldással nagyon jó hatásfokkal lehet tárolóhelyet megtakarítani. 
 A legjobban deduplikálható adatok a Virtualised Desktop Infrastructure -- későbbiekben VDI rendszerek -- amelyek esetén az operációs rendszer a hozzátartoztó frissítési csomagok, a feltelepített alkalmazások alapfáljai többnyire minden rendszeren megegyeznek. 
 Amennyiben a virtuális gépeken nagyon kevés egyedi fájl és telepített alkalmazás található úgy a deduplikációs ráta elérheti akár a 80\%\=/ot is, ahogy az a \ref{fig:deduplication_ratio}. ábrán is látható.
 
-\begin{figure}[ht]
+\begin{figure}
 \centering
-\includegraphics[width=0.8\textwidth]{deduplication-ratio-sample}
+\includegraphics[width=1\textwidth]{deduplication-ratio-sample}
 \caption{Deduplikációs ráta egy Hyper-V szerveren amelyen teszt szerverek futnak virtuális gépekként}
 \label{fig:deduplication_ratio}
 \end{figure}
@@ -224,14 +224,23 @@ A virtuális hálózatoknak köszönhetően a hostokon vagy clustereken belül t
 
 \chapter{Esettanulmány}
 
-A dolgozat megírásakor nem állt rendelkezésre, olyan alany akinek az esetét fel lehetett volna dolgozni, így egy feltételezett igénylőt alkottam meg. 
+A diplomamunkám megírásakor nem állt rendelkezésre, olyan alany akinek az esetét fel lehetett volna dolgozni, így egy feltételezett igénylőt alkottam meg és azt vezetem végig. \\
 
-Az igénylőt a manapság igen divatos Start-Up cégek mintájára alkottam meg. Egy ilyen cégnél fontos, hogy minél alacsonyabb legyen a kezdeti kiadás mértéke. Számukra ezért lehet előnyös egy hosting céghez fordulni. A webfejlesztéssel foglalkozó személyeknek úgy sem idegen az ilyesféle megoldás. Az igénylő a megkeresésekor elmondta még, hogy szeretnének mobil alkalmazás fejlesztéssel, és Android egyedi rom-ok gyártásával foglalkozni. De szeretnék, ha mindezt egy központi verziókövető rendszerben tudnák tárolni. 
+Az inspirációmat a manapság igen divatos Start-Up cégekből merítettem. A startupok olyan vállalkozások amelyeket frissen alapítottak, gyorsan növekednek, céluk pedig valamilyen piaci igény kielégítése. Ezen cégek általában közepes méretű vállalkozások, amelyeknek az üzleti modelljének legfontosabb építőköve a nagymértékű növekedés. Többségében a manapság igen dinamikusan változó területeken ténykednek, például: internetes szolgáltatások, informatika, távkommunikáció és robotika. Azért tudnak ilyen hatékonyak lenni, mert a tervezésben, fejlesztésben, tesztelésben és a kutatásban is részt vesznek. Mivel nem csak informatika területén mozognak a startup-ok, így az elnevezés a 1990-es években elterjedt a hasonló üzleti modellt követő vállalkozásokra is.
+Amint azt már fentebb leírtam, ezek a vállalkozásoknak ingadozó a növekedési ütemük, ezzel együtt az erőforrás igényük nehezen tervezhető.  Az állandóan változó igényeket sokkal könyebb kielégíteni ha IaaS modellben dolgoznak.\\
+
+\noindent \textbf{IaaS} - Infractructure as a Service \cite{IaaS}
+
+Átmenetet képez a klasszikus infrastruktúrális kiépítés és a telljesen felhőből kiszolgált rendszerek között. A szolgáltató ilyen esetben nyújta a biztonságos és stabil szolgáltatássokkal ellátott adatközpontot, és a szervert, továbbá vállalja a fizikai üzemeltetést, lásd: \ref{fig:aaS} ábra. Mindent ami erre épül (operációs rendszer, alkalmazások, adatok) az igénylő üzemelteti és kezeli. 
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.9\textwidth]{aaS.jpg}
+\caption{Szolgáltatási szintek}
+\label{fig:aaS}
+\end{figure}
 
 \section{Igényfelmérés}
-Az ilyen jellegű munkáknál is nagyon fontos az igényfelmérés. Egyrészről szükséges ahhoz, hogy a megrendelő a végén úgy érezze, hogy mindent megkapott amit szerett volna. Másrészről a szolgáltatót is fedezi, mert egy korábban megállapított és közösen elfogadott követelmény rendszernek megfelelő rendszert ad át.
-\newline
-\newline
+Minden esetben nagyon fontos az igényfelmérés. Egyrészről szükséges ahhoz, hogy a megrendelő a végén úgy érezze, hogy mindent megkapott amit szerett volna. Másrészről a szolgáltatót is fedezi, mert egy korábban megállapított és közösen elfogadott követelmény rendszernek megfelelő terméket ad át. Üzemeltetésnél elsőre nem tűnhet annyira fontosnak, mint fejlesztésnél, ellenben itt a legfontosabb előre kikötni, hogy mit is tartalmaz a támogatás, mennyi a normálisnak tekinthető rendelkezésre állási idő. Ezeket az Service Level Aggreement - továbbiakban SLA - dokumentumban kötik ki a felek. \\
 Az igényfelmérés több lépcsőből áll. 
 \subsubsection{Elbeszélgetés}
 Ez az első lépése a követelmények felmérésének. Ez a szekció egyszer történik meg, ilyenkor a megrendelő és a szolgáltató egy embere - akik nem feltétlenül rendelkeznek technikai tudással - egy megbeszélés során, összeszedik, hogy mit szeretnének elérni. 
@@ -254,17 +263,16 @@ Meg kell határozni a következő tényezőket:
 \section{Migráció cloudba}
 
 
+
 \chapter{Esettanulmány háttércég}
 
 \section{Architektúra}
 
-Architektúrális szempontból Intel alapú szervereket használtam. A fejlesztői és tesztelői környezet alapját 2 db Dell PowerEdge R710-es szerver adta. A szerverek a munka ideje alatt egyenként 2 db Intel{\textsuperscript{\textregistered}} Xeon{\textsuperscript{\textregistered}} E6545 processzorral (6 mag 12 HT szál), 96 GB DDR3 ECC RAM-al, 2x64 GB Rendszer lemezekkel illetve 2x136 GB adatlemezzel volt ellátva. A kettő szerver egy failover clusterben üzemelt. A rendszer és az adat lemezek RAID1-ben üzemeltek az adatvesztés megelőzése és a magas rendelkezésre állás biztosítása érdekében. Az adatlemezek mérete sosem volt gond a Windows Deduplikációs megoldása miatt.
+Architektúrális szempontból Intel alapú szervereket használtam. A fejlesztői és tesztelői környezet alapját 2 db Dell PowerEdge R710-es szerver adta. A szerverek a munka ideje alatt egyenként 2 db Intel Xeon E6545 processzorral (6 mag 12 HT szál), 96 GB DDR3 ECC RAM-al, 2x64 GB Rendszer lemezekkel illetve 2x136 GB adatlemezzel volt ellátva. A kettő szerver egy failover cluster-ben üzemelt. A rendszer és az adat lemezek RAID1-ben üzemeltek az adatvesztés megelőzése és a magas rendelkezésre állás biztosítása érdekében. Az adatlemezek mérete sosem volt gond a Windows Deduplikációs megoldása miatt.
 
+A rendszereket központilag nem menedzselt, de egységes alapkonfigurációval láttam el annak érdekében, ha az ügyfélnek segítségre lenne szüksége. \\
 
-A rendszereinket központilag nem menedzselt, de egységes alapkonfigurációval látjuk el annak érdekében, ha az ügyfélnek segítségre lenne szüksége. 
-
-
-A megépített rendszerben használt alapkonfiguráció:
+\noindent A megépített rendszerben használt alapkonfiguráció:
 \begin{itemize}
 	\item Processzor: 2 mag
 	\item Memória: dinamikus memória 1 GB minimum, 2 GB induláskor, 4 GB maximum.
@@ -273,31 +281,24 @@ A megépített rendszerben használt alapkonfiguráció:
 	\item Operációs rendszer: Windows Server 2012 R2
 \end{itemize}
 
-\subsubsection{A mester image használata}
+\subsubsection{Lite touch deployment}
+Fontos szempont, hogy egy megrendelt rendszer mennyi időn belül lesz használatba vehető, és a megrendelések előkészítése mennyi időt vesz igénybe a szolgáltató cég részéről. Alapvetően 3 irányzatot lehet felismerni a rendszerek elkészítését illetően.\\
 
-A mester image előállítása nagyban meggyorsítja a megrendelt rendszerek üzembehelyezését. Alapvetően két nagy irányzatot érdemes megemlíteni ezen megoldások terén. 
+Ha a klasszikus IaaS szemléletet vesszük alapul, akkor a szolgáltatónak csak a szervert vagy a virtuális gépet kell előkészíteni, hozzáférést garantálni és a rendszer használatba is vehető. Az elkészítésre fordított szinte minimális hiszen virtualizált rendszerek esetén akár telljesen automatikusan is megtörténhet minden lépés a megrendeléstől az átadásig. Amennyiben fizikai hardvert használ a megrendelő úgy akkor elő kell készíteni a hardvert az adatközpontban, és a megfelelő konfiguráció elkészítése után adható csak át. Természetesen ilyenkor az operációs rendszer telepítése a végfelhasználóra marad. \\
 
-Az első megoldás amikor már egy teljesen kész rendszert tartalmazó de sysprep-elt virtuális merevlemezt másolunk át a konténer mappájába. Majd azt a virtuális gép konfigurációjakor becsatoljuk és már indítható is a rendszer. Ezek után összesen a végfelhasználói szerződést kell elfogadnunk és használatba is vehető a gép. Ezután át kell nevezni, be kell állítani számára a megfelelő IP konfigurációt és át is adható a felhasználónak.
-Ezt a megoldást akkor érdemes használni, ha az alap operációs rendszerre még nagyon sok alkalmazást kell feltelepíteni és azokban módosításokat végrehajtani. Amennyiben ezek a lépések végrehajthatóak egy jól megszerkesztett konfigurációs fájlal és a telepítő képest azt értelmezni akkor használható a másik megközelítés is.  
-
- 
-% \\TODO  A két irányzat alapvető lépéseit illetve a továbbiakban szükséges folyamatokat bemutatni
+A következő lépcsőfok, amikor az operációs rendszert és alkalmazásokat is előtelepítve adjuk át a rendszereket. Fontos megemlíteni, hogy nem minden megrendelést lehet valamilyen előre megalkotott rendszerrel kiszolgálni. Ugyanakkor az esetek jelentős részét előre definiált alkalmazás palettával le lehet fedni. A Microsoft létrehozott egy Lite Touch megoldást amelyet Microsoft Deployment Toolkit-nek nevezett - továbbiakban MDT. Az MDT nagy előnye hogy az operációs rendszer feltelepítését, annak konfigurálását, és az olyan alkalmazások telepítését amelyek rendelkeznek felügyeletlen telepítővel telljesen automatikusan elvégzi. Amennyiben olyan módosítást szeretnénk elvégezni, amely nem automatizálható, úgy a telepítés addig felhasználói beavatkozásra vár. Ezért hívják lite touch-nak mert ténylegesen csak azoknál a lépéseknél felhasználó interakciót amelyeket nem tud magától elvégezni és az elindításakor. Az MDT univerzális eszköz mert alkalmas virtuális gépek és fizikai hardverek telepítésésre is, ugyanakkor a fizikai gépek esetén még a driverek telepítését is elvégzi. Az MDT előnye egyben az egyik hátránya is. A telljes telepítéshez szükséges adatmennyiséget át kell vinni a hálózaton, és a telepítéskor jelentkező terhelést a hardverre nem lehet lecsökkenteni. Alapját a Preboot eXecution Environment - továbbiakban PXE - adja amely egy nagyon kisméretű rendszer, ez hozzáférést garantál a hardverhez és elvégzi az operációsrendszer telepítés részeit, a többi beállítást már a windows telepítés post-install szekciójában az rendszer futtatja le.  \\
 \begin{figure}[ht]
 \centering
-\includegraphics[width=0.8\textwidth]{generation_selection}
-\caption{Generáció választás Hyper-V managerből készített virtuális gép esetén}
-\label{fig:gen_selection}
+\includegraphics[width=1\textwidth]{mdt.png}
+\caption{MDT telepítési képernyő, forrás \cite{MDTImage}}
+\label{fig:mdt_image}
 \end{figure}
 
+Hasonló megoldás de másabb megközelítés amikor egy admin előtelepíti a rendszert, feltelepít és beállít minden olyan alkalmazást amire szükség van abban a rendszerképben, amint végzett úgy a rendszeren végrehajt egy preparálást. A preparálás után a rendszerkép bármilyen kompatibilis hardverrel rendelkező gépre alkalmazható. Amennyiben ezt a technológiát használják az adminisztrátorok megspórolhatják a bonyulult és nem automatizálható alkalmazások telepítését minden egyes új rendszer üzembe helyezésekor. Amennyiben virtualizált környezetből szolgálják ki az igényeket, előnyös lehet ezt használni, ugyanis a hardver biztosan kompatibilis lesz. Az MDT-vel ellentétben itt csak az elkészült lemezképet kell átvinni a hálózaton, aztán csak el kell indítani és használatba is vehető, a telepítés hardverigénye csak a mester lemezkép elkészítésekor jelentkezik. \\
 
-A másik irányzat amikor a Microsoft Deployment Toolkitet használjuk (továbbiakban MDT). Az MDT telljesen más felfogást követ. Itt light-touch megoldásról beszélünk, tehát lényegében egy automatizált telepítő végighalad azon a telepítési lépéseken amelyeket személyesen végigcsinálná a telepítést végző személy. 
-Az MDT nagy előnye, hogy csak azokon a pontokon igényel interakciót, amelyeket nem tud magától meghatározni a rendszer, lehet ilyen az egyedi lokális adminisztártorok beállítása, a számítógép átnevezése. Az MDT telepítések, csoportházirenddel kombinálva közel ugyanazt a végeredményt érhetik el mint a master image-es megoldások. 
+Az előbb látott módszereket tovább lehet fejleszteni, ellenben az már külön alkalmazáscsomag megvásárlását igényli. A Microsoft System Center alkalmazás csomag része a Configuration Manager. Amennyiben rendelkezik a szolgáltató ezzel az alkalmazással, úgy elérhető bizonyos esetekben a Zero Touch telepítés is. Megjegyzendő, hogy a Zero Touch csak akkor fogható fel ténylegesen nulla interakciót igénylő telepítésnek, ha egy UEFI-re alkalmas már telepített operációs rendszerrel és SCCM agent-el rendelkező gépet kell újratelepíteni. Ezen kritériumok fennállása esetén az SCCM agent képes úgy újraindítani a gépet, hogy nem kell még a PXE boot menüt sem manuálisan felhozni, ahonnan automatikusan a megfelelő konfigurációs lemezképet fogja a telepítő betölteni. 
 
-% TODO a különböző hardverek esetét kitárgyalni!
-
-A két megoldás közötti legnagyobb különbség ám nem a végeredményben hanem a felhasznált időben rejlik. Az első megoldás esetén annyi időt kell a rendszer telljes beüzemelésére számítani amennyi idő alatt a közös helyről a VM konténer mappájába másolódik a VHDX, és a szükséges beállítások elvégzésre kerülnek. Ezzel szemben a második megoldás időigényesebb, mert ugyan felhasználó interakciót csak nagyon kevés ponton igényel, a telljes telepítési folyamatnak le kell zajlani mire használatba lehet venni a gépet. 
-
-A szolgáltatók ezért inkább az első megoldást szokták választani. Könnyebb gyorsabb és kevesebb erőforrást igényel. Ha valami nagyon egyedit kér a felhasználó akkor lehet megoldást adni arra, hogy elérje a VM konzolját és így magának készíthesse el a telepítést.
+A dolgozat elkészítésekor én preparált rendszerképeket használtam. Számomra ez volt a legelőnyösebb, mert a cluster közös tárolóhelyén volt letárolva a mester lemezkép. Egy új rendszer létrehozása másodpercekben mérhető, mert a deduplikációnak köszönhetően nem kell a rendszernek mozgatni 30GB-nyi adatot, csak létrehozza az újraelemzési pontokat.  
 
 \section{Automatizált megoldások}
 
@@ -432,13 +433,40 @@ A cross-platform management témakörét ugyan nem most veszi elő a Windows el�
 \section{Programozási paradigmák}
 Mint minden nyelv esetében a PowerShellnél is vannak megkötések. Aki sikeres fejlesztője szeretne lenni, annak ismernie és alkalmaznia kell a következőket.
 \subsection{Kötelező fejlesztési irányelvek}
-Minden PowerShell parancs felépítését tekintve két részből áll, Ige-Főnév alakú. A legszigorúbb feltételek az parancsok első részére vonatkoznak, hiszen itt szeretnénk elérni az egységességet, érdemes az igék ugyanezen alakjait használni. 
+Minden PowerShell parancs felépítését tekintve két részből áll, Ige-Főnév alakú. A legszigorúbb feltételek az parancsok első részére vonatkoznak, hiszen itt szeretnénk elérni az egységességet, ezéer érdemes az igék ugyanezen alakjait használni. 
 Lásd: \ref{appendix:powershellRequiredVerbs} függelék.
 \subsection{Erősen ajánlott fejlesztési irányelvek}
+\subsubsection{Tervezési irányelvek}
+Ezeket az irányelveket azért érdemes figyelembe venni, mert így egységes felhasználói élményt lehet garantálni, továbbá javulhat a kód minősége.
+
+\noindent \textbf{Használj könnyen érthető rövid parancsneveket:}\\
+Arra kell törekedni, hogy a főnevek amelyeket a parancs nevében felhasználunk, tömör de jó leíróképességgel rendelkezzel arról amit szeretnénk elérni. Például ha szeretnénk egy olyan parancsot írni amely létrehoz egy kapcsolatot egy Microsoft SQL Serverhez akkor a parancsnév legyen \textit{Create-SQLServerConnection}. \\
+
+\noindent \textbf{Mindig Pascal case-t használj:} \\
+A programozásban nagyon fontos hogy nem lehet akárhova szóközt tenni, így az összetartozó neveket egy szóként kell felírni. Hogy mégis könyebben olvashatóvá lehessen tenni a kódot a Power Shell-ben az úgynevezett Pascal case-t használják. A Pascal case és a Camel case között annyi a különbség, hogy a Pascal esetében minden új szó kezdőbetűjét, beleértve az első szót is, nagy betűvel írjuk. Míg a Camel esetében csak a másodiktól kezdődően alkalmazzuk ezt a szabályt. Ezt az írásmódot mind a változó neveknél mind a parancsneveknél érdemes használni. \\
+
+\noindent \textbf{Paraméter elnevezések:} \\
+A paraméterek elnevezése legalább annyira lényeges mint magának a parancsnak. A Pascal case használata itt is érvényesül, de ennél sokkal több mindenre érdemes figyelmet fordítani.
+
+Amennyiben lehetséges használj standard neveket, ha azokat túl bonyolultnak vagy hosszúnak tartod elláthatod őket aliasokkal a könnyedebb használat elősegítésére. Ugyanazt a paramétert mindenhol ugyanolyan névvel illesd.
+
+A nevekben kerüld a többesszám használatát. A felhasználó ugyan lehet hogy több értéket fog egyszerre átadni, de az esetek többségében egy értékkel fog dolgozni, programozási szempontból pedig az egy elemű tömb is tömb, tehát nem okoz gondot a számosság. Többesszámot csak akkor használj, ha minden esetben több elemet fogad a parancs. Ez esetben viszont a felhasználói imputot validálni kell, hogy valóban több értéket kapott-e a parancs, és amennyiben a validáció nem sikeres, úgy értesíteni kell a felhasználót.
+
+Azokat a paramétereket amelyek csak az \textit{igaz} vagy \textit{hamis} értékeket vehetik fel, definiáld \textit{switch} tipusúnak. Sokkal szebben fog kinézni a kód és a parancsot meghívni is könyebb. Amennyiben a klasszikus két értékű logika nem lenne elég és a harmadik \textit{nem megadott} értékre is szükséged van, akkor pedig nullértéket is felvehető boolean típusnak definiáld. 
+
+Parancsok egy csoportja - \textit{Add}, \textit{Set}, \textit{New} - alapértelmezés képpen nem ad kimenetet, de a parancsot fel kell készíteni arra az esetre ha a felhasználó szeretné az objektumot használni továbbiakban. Ezekre az esetre a \textit{PassThru} switch paramétert kell elérhetővé tenni. Többségében ez annyit tesz, hogy ha ez a paraméter meglett adva, akkor a \textit{Write-Object} metódust meg kell hívni a eredményre. \\
+
+\noindent \textbf{A felhasználót a megfelelő módon tájékoztasd:} \\
+A legfontosabb, hogy a program mindig csak azt jelenítse meg a képernyőn amire a felhasználónak szüksége van. A Power Shell beépítve tartalmaz 4 kommunikációs csatornát \textit{Host, Warning, Verbose, Debug}. A kódot úgy kell megtervezni és megírni, hogy az üzenetet mindig a szintnek megfelelő csatornára írja ki. Kezdő programozók gyakori hibája, hogy a \textit{Host} kimenetet használják  \textit{Verbose} és \textit{Debug} logolásra is.  Hivatalosan a \textit{Warning} csatornára akkor szabad írni, ha valami nem tervezett, nem szabályos működés lépett fel a parancs végrehajtása során. A \textit{Verbose} logolás az amikor a szükségesnél némileg több információt osztunk meg, de nem minden értéket, amivel úgy sem tudna mit kezdeni a végfelhasználó. A legbeszédesebb log egyértelműen a \textit{Debug}, ide minden olyan értéket ki lehet és ki is kell írni, amelynek segítségével a hibás működés okát fel lehet tárni. Érdemes figyelemben tartani, hogy amikor a \textit{Debug} logolás be van kapcsolva akkor a \textit{Verbose} is. 
+
+Létezik egy 5. csatorna is amely vizuális visszajelzést ad a felhasználónak azokról a folyamatokról amelyek hosszú ideig tartanak de nem a háttérben futnak, gyakorlatilag a folyamatjelző. A használatához a \textit{Write-Progress} metódust kell észben tartani.\\
+
+\noindent \textbf{Felhasználói interakció}\\
+A PowerShell ugyan önmagában CLI de ez nem megkötés, bizonyos parancsok képesek arra hogy grafikus elemeket jelenítsenek meg és így segítsék elő a kommunikációt a cmdlet és a felhasználó között. Normál esetben, hacsak nem úgy tervezzük meg a cmdlet-ünket, hogy az mindenképp használjon grafikus elemeket, törekedni érdemes arra, hogy ne lépjünk ki a CLI-ből. Ennek a megvalósításához lesz segítségünkre a Host osztály \textit{PromptForChoice, Prompt és Read-Host} metódusai.
+
 \subsection{Ajánlások}
 
-% \\TODO
-\cite{PowerShellGuidelines}
+A szekció elkészítésében az MSDN nyújtotta a segítséget. \cite{PowerShellGuidelines}
 
 \addcontentsline{toc}{chapter}{\listfigurename}
 \listoffigures
