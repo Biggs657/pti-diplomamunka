@@ -95,6 +95,38 @@ A JRE felel azért, hogy az alkalmazások egy külön virtuális gépben fussana
 Jelenleg a virtualizációs megoldásokat már a biztonság fokozására használják, ezt bővebben a gyártóspecifikus részben taglalom.
 
 \section{On-Premises rendszerek}
+\noindent On-Presmises rendszerek esetén megjegyezném, hogy mindhárom nagy cég hardveres megkötései megegyeznek 2016-tól. \cite{VMwareLimits} \cite{Hyper-VLimits}\\
+
+\noindent Gazdagépek tekintetében: \\
+\begin{table}[ht]
+\centering
+	\begin{tabular}{l | l}
+		\textbf{Összetevő} & \textbf{Limitáció} \\
+		\hline
+		Logikai processzorok & 512 db \\
+		Memória & 24TB \\
+		Futó virtuális gépek & 1024 db \\
+		Cluster node-ok & 64 db \\
+		Virtuális gépek a cluster-enként & 8000 db\\
+	\end{tabular}
+\end{table}
+
+\noindent Virtuális gépeket illetően:
+\begin{table}[ht]
+\centering
+	\begin{tabular}{l | l}
+		\textbf{Összetevő} & \textbf{Limitáció} \\
+		\hline
+		Logikai processzorok & 240 db \\
+		Memória & 12TB \\
+		Virtuális Fibre Channel HBA & 4 db \\
+		Virtuális SCSI kontroller & 4 db \\
+		Virtuális SCSI lemez & 256 db összesen, 64 db kontrollerenként \\
+		Virtuális hálózati adapter & 12 db \\
+	\end{tabular}
+\end{table}
+
+
 
 \subsection{Microsoft Hyper-V\texttrademark}
 
@@ -111,7 +143,7 @@ A Microsoft Hyper-V ezzen a néven először a Windows Server 2008 operációs r
 Megjelent belőle ugyanekkor egy ingyenes verzió is Hyper-V Server néven, amely nem volt más mint egy Windows Server 2008 Core edition, a Hyper-V role-al előtelepítve, míg a többi Role letiltásra került.
 A Hyper-V most már minden mai Windows kiadásban rendelkezésre áll. A kezdeti limitált képességeit az újabb verziókkal kibővítette és most már teljesen valós opció a többi nagy virtualizációs platform mellett. 
 
-A későbbiekben bemutatom azon funkcióit amelyek a virtualizált rendszereknél elengedhetelenek és amelyeknek köszönhetően a stabilitás, biztonság, és a skálázhatóság megoldható a Microsoft saját rendszerével annélkül, hogy megvásárolható opció lenne, mint más gyártóknál.
+A későbbiekben bemutatom azon funkcióit amelyek a virtualizált rendszereknél elengedhetelenek és amelyeknek köszönhetően a stabilitás, biztonság, és a skálázhatóság megoldható a Microsoft saját rendszerével annélkül, hogy azok megvásárolható opciók lennének, mint más gyártóknál.
 
 \subsubsection{Nano Server}
 
@@ -202,7 +234,18 @@ A Hypervisor-ok már a kezdetektől fogva képesek voltak a virtuális hálózat
 
 A virtuális hálózatoknak köszönhetően a hostokon vagy clustereken belül tudunk privát alhálózatok létrehozni amellyel az adatközlést még biztonságosabbá és szeparáltá lehet tenni.
 
-\subsection{VMWare ESX \textsuperscript{\textregistered}}
+\subsection{VMware vSphere\textsuperscript{\textregistered}}
+A VMware céget 1998-ban alapították. Eleinte csak operációs rendszeren belül nyújtottak virutalizációs megoldást a Workstation  termékvonallal. 2003-ban jelentették be az elhíresült hipervizorjukat az ESX-et, amely valójában egy rövidítése az Elastic Sky X szavaknak. Ezzel egyidőben megjelent a VMware VirtualCenter amely az ESX-el együtt a VMware infrastructure nevet viselte. A vSphere nevet 2009-ben vette fel amikor is a VI 3.5 folytatása már az új néven lett bemutatva. Az évek folyamán a korai verziók felül emelkedtek az ellenfeleken szolgáltatás kínálatban, mert sok olyan funkciót tartalmaztak amelyeket a konkurensek nem tudtak. Ugyanakkor ezekért a funkciókért felárat kellett fizetni. Microsoft Server 2016-al bemutatkozott Hyper-V már mindenben ugyanazt kínálja, csak más névven. 2008-ban ugyan ingyenessé tették az ESXi hipervizort, viszont az ingyenes nem licenszelt termék komoly megkötésekkel üzemel csak.  \\
+
+\noindent \textbf{ESXi} \\
+Az ESXi úgynevezett egyes típusú hipervizor. Ez annyit jelent, hogy nem egy alkalmazás, amely az operációs rendszer fölé húz egy réteget amelyben képes virtuális gépeket futtatni, hanem egy kernel, amely futtatja a VM konténereket. Fontos megjegyeznem, hogy a Hyper-V is ugyanígy működik ellenben annyi különbséggel, hogy a szerepkör aktiválódása után, az újrainduláskor az operációs rendszer futtatása is a Hyper-V alá kerül be. Az ESXi egyik nagy előnye volt a kis mérete (kb 110MB telepítve) és ebből adódóan a patchelések szükségességének a ritkasága is, azonban a Microsoft Nano Server megjelenése óta ebben sem különbözik. 
+
+Az ESXi konzol képernyője ugyanúgy csak egy recovery console mint a Nano Server esetén, csak a legfontosabb beállításokat lehet innen elvégezni, minden másra ott a webfelület amelyet minden host futtat, vagy be lehet kötni vSphere konzolba. \\
+
+\noindent \textbf{vSphere} \\
+A vSphere egy management tool amely az ESXi gazdagépeket és a VMware cloudban futó virtuális gépeket is képes kezelni. A 6.5-ös verzióval már ezek a szerverek is lehetnek klaszterben így a központosított management felület mindig elérhető. Megjegyezném, hogy a Microsoft is rendelkezik egy ilyen termékkel amely a System Center csomag részét képező Virtual Machnie Manager. A VMM 2016 is már képes nagy rendelkezésre állású alkalmazásként futni. 
+
+A vSphere elérhető webfelületen, amely a 6.5-ös verziótól HTML5 alapú korábban Java alapokon nyugvott. Előtelepített alkalmazásból vSphere Client, de akár REST API-on keresztül is. A management további formályát képezi a PowerCLI amely a VMware rendszerekhez ad PowerShell interfészt.
 
 
 \subsection{Oracle\textsuperscript{\textregistered} VM}
@@ -217,9 +260,6 @@ A virtuális hálózatoknak köszönhetően a hostokon vagy clustereken belül t
 
 
 \subsection{Oracle Cloud}
-
-
-\section{Platformok összehasonlítása}
 
 
 \chapter{Esettanulmány}
@@ -431,7 +471,9 @@ A PowerShell 3.0 már nem ölállóan érkezett hanem egy nagyobb csomag a Windo
 A cross-platform management témakörét ugyan nem most veszi elő a Windows először, hiszen a Windows 10-től ugyan még Beta státuszban de a Bash is elérhető a Microsoft rendszerét futtató gépekre, amennyiben az kilép a fejlesztési státuszból a Shell emulátorokat végre fel lehet számolni.
 
 \section{Programozási paradigmák}
-Mint minden nyelv esetében a PowerShellnél is vannak megkötések. Aki sikeres fejlesztője szeretne lenni, annak ismernie és alkalmaznia kell a következőket.
+Mint minden nyelv esetében a PowerShellnél is vannak megkötések. Aki sikeres fejlesztője szeretne lenni, annak ismernie és alkalmaznia kell a következőket. \\
+
+\noindent A szekció elkészítésében az MSDN nyújtotta a segítséget. \cite{PowerShellGuidelines}
 \subsection{Kötelező fejlesztési irányelvek}
 Minden PowerShell parancs felépítését tekintve két részből áll, Ige-Főnév alakú. A legszigorúbb feltételek az parancsok első részére vonatkoznak, hiszen itt szeretnénk elérni az egységességet, ezéer érdemes az igék ugyanezen alakjait használni. 
 Lásd: \ref{appendix:powershellRequiredVerbs} függelék.
@@ -461,12 +503,60 @@ A legfontosabb, hogy a program mindig csak azt jelenítse meg a képernyőn amir
 
 Létezik egy 5. csatorna is amely vizuális visszajelzést ad a felhasználónak azokról a folyamatokról amelyek hosszú ideig tartanak de nem a háttérben futnak, gyakorlatilag a folyamatjelző. A használatához a \textit{Write-Progress} metódust kell észben tartani.\\
 
-\noindent \textbf{Felhasználói interakció}\\
-A PowerShell ugyan önmagában CLI de ez nem megkötés, bizonyos parancsok képesek arra hogy grafikus elemeket jelenítsenek meg és így segítsék elő a kommunikációt a cmdlet és a felhasználó között. Normál esetben, hacsak nem úgy tervezzük meg a cmdlet-ünket, hogy az mindenképp használjon grafikus elemeket, törekedni érdemes arra, hogy ne lépjünk ki a CLI-ből. Ennek a megvalósításához lesz segítségünkre a Host osztály \textit{PromptForChoice, Prompt és Read-Host} metódusai.
+\noindent \textbf{Felhasználói interakció:}\\
+A PowerShell ugyan önmagában CLI de ez nem megkötés, bizonyos parancsok képesek arra hogy grafikus elemeket jelenítsenek meg és így segítsék elő a kommunikációt a cmdlet és a felhasználó között. Normál esetben, hacsak nem úgy tervezzük meg a cmdlet-ünket, hogy az mindenképp használjon grafikus elemeket, törekedni érdemes arra, hogy ne lépjünk ki a CLI-ből. Ennek a megvalósításához lesz segítségünkre a Host osztály \textit{PromptForChoice, Prompt és Read-Host} metódusai.\\
+
+\noindent \textbf{Csővezeték használat:} \\
+A CLI-k alapvető használati módja a csővezeték használat. Ilyenkor a cmdlet-ek kimenetét egy másik cmdlet dolgozza fel. Erre a tulajdonságra a saját magunk által tervezett kódokat is fel kell készíteni. Ehhez a paramétereknél a \textit{ValueFromPipeline} vagy a \textit{ValueFromPipelineByPropertyName} attribútumokat kell megadni. Arra is fel kell készíteni a kódot, hogy a PowerShell cmdletek kivélte a \textit{Sort} nem buffereli az adatokat, hanem beérkezés után feldolgozza és továbbítja. \\
+
+\noindent \textbf{Kis-Nagybetű tartás és érzéketlenség:}\\
+A PowerShell önmaga ugyan nem érzékeny a kis-nagy betűkre, azonban a kompatibiliás megőrzése érdekében nem módosít. Így a már meglévő rendszerrekkel továbbra is együtt tud működni. Tehát a kódunkat úgy kell megalkotni, hogy ennek az elvárásnak eleget tegyen.
 
 \subsection{Ajánlások}
+\noindent \textbf{Támogasd az \textit{InputObject} paramétert:}\\
+Abból eredően hogy a PowerShell .NET keretrendszer osztályaival képes dolgozni a cmdlet-jeinket ha van értelme, úgy kell elkészíteni, hogy azok képesek legyenek paraméteren keresztül fogadni ilyen objektumokat. Mivel a cmdletek között ez elterjedt ennek a paraméternek a kezelése így minden esetben \textit{InputObject} névvel látják el az egységesség jegyében. \\
 
-A szekció elkészítésében az MSDN nyújtotta a segítséget. \cite{PowerShellGuidelines}
+\noindent \textbf{Támogasd a \textit{Force} paramétert:} \\
+Egy újabb széles körben elterjedt és standard névvel ellátott paraméter. Bizonyos cmdlet-ek védik a felhasználót, hogy véletlenül ne végezhessen el olyan változtatásokat amelyeket nem lehet visszavonni. Ilyen esetekben a \textit{Force} kapcsoló paraméter megadásával a felhasználó jelezi, hogy amennyiben rendelkezik a szükséges jogosultságokkal azt a módosítást biztosan el kell végezni, felül kell írni a védelmet. \\
+
+\noindent \textbf{Hitelesítő adatok használata:} \\
+Cmdlet-eknek fel kell ajánlani a lehetőséget, hogy \textit{PSCredential} tipusú objektumban található hitelesítő adatoknak megfelelő jogosultsággal és user nevében futtassák le a tartalmukat. \\
+
+\noindent \textbf{Adj lehetőséget a kódolás megadására:} \\
+Azoknál a cmdleteknél amelyek írnak vagy olvasnak szöveges vagy bináris állományokat a fájlrendszerben, meg kell adni a lehetőséget, hogy paraméteren keresztül ki lehessen választani az elvárt kódolást. \\
+
+\noindent \textbf{Teszt cmdlet-eknél a visszatérési érték legyen \textit{Boolean} típusú:} \\
+Amennyiben valamilyen erőforráson végez tesztelést a cmdlet, úgy a visszatérési értékének \textit{Boolean} típusnak érdemes lennie, mert így felhasználhatóak feltételes elágazásokban. \\
+
+\noindent \textbf{Használj szerializálható változókat:} \\
+A következő változótípusok támogajták a szerializációt, segítségükkel a szerver-kliens kommunikációt lehet megkönnyíteni.
+\begin{itemize}
+	\item primitív típusok:
+	\begin{itemize}
+		\item \textit{Byte, SByte, Decimal, Single, Double, Int16, Int32, Int64, Uint16, Uint32, Uint64}
+		\item \textit{Boolean, Guid, Byte[], TimeSpan, DateTime, Uri, Version}
+		\item \textit{Char, String, XmlDocument}
+	\end{itemize}
+	\item beépített újraépíthető típusok:
+	\begin{itemize}
+		\item \textit{PSPrimitiveDictionary}
+		\item \textit{SwtichParameter}
+		\item \textit{PSListModifier}
+		\item \textit{PSCredential}
+		\item \textit{IPAddress, MailAddress}
+		\item \textit{CultureInfo}
+		\item \textit{X509Certificate2, X500DistinguishedName}
+		\item \textit{DirectorySecurity,FileSecurity,RegistrySecurity}
+	\end{itemize}
+	\item egyéb típusok:
+	\begin{itemize}
+		\item \textit{SecureString}
+		\item Előzőleg felsorolt típusokat tartalmazó konténerek
+	\end{itemize}
+\end{itemize}
+
+\noindent \textbf{\textit{SecureString} használata:}\\
+Amikor titkos adatokkal dolgozik a cmdlet, olyankor \textit{SecureString} használata ajánlott, ez magában foglalja a bemeneti paramétert és a csővezetékbe továbbadott információkat is.
 
 \addcontentsline{toc}{chapter}{\listfigurename}
 \listoffigures
