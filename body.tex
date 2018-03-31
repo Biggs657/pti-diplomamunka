@@ -15,6 +15,7 @@
 \usepackage[shortcuts]{extdash}
 \usepackage[toc,page]{appendix}
 \usepackage{tabularx}
+\usepackage{float}
 \graphicspath{ {images/} }
 \usepackage[backend=biber,]{biblatex}  % irodalomjegyzék
 
@@ -169,7 +170,7 @@ Ezzel a megoldással nagyon jó hatásfokkal lehet tárolóhelyet megtakarítani
 A legjobban deduplikálható adatok a Virtualised Desktop Infrastructure -- későbbiekben VDI rendszerek -- amelyek esetén az operációs rendszer, a hozzátartozó frissítési csomagok és a feltelepített alkalmazások alapfáljai többnyire minden rendszeren megegyeznek. 
 Amennyiben a virtuális gépeken nagyon kevés egyedi fájl és telepített alkalmazás található úgy a deduplikációs ráta elérheti akár a 80\%\=/ot is, ahogy az a \ref{fig:deduplication_ratio}. ábrán is látható.
 
-\begin{figure}[ht]
+\begin{figure}[H]
 \centering
 \includegraphics[width=1\textwidth]{deduplication-ratio-sample}
 \caption{Deduplikációs ráta egy Hyper-V szerveren amelyen teszt szerverek futnak virtuális gépekként}
@@ -237,12 +238,12 @@ A virtuális hálózatoknak köszönhetően a host-okon vagy cluster-eken belül
 \subsection{VMware vSphere\textsuperscript{\textregistered}}
 A VMware céget 1998-ban alapították. Eleinte csak operációs rendszeren belül nyújtottak virtualizációs megoldást a Workstation  termékvonallal. 2003-ban jelentették be az elhíresült hipervizorjukat az ESX-et, amely valójában egy rövidítése az Elastic Sky X szavaknak. Ezzel egyidőben megjelent a VMware VirtualCenter amely az ESX-el együtt a VMware Infrastructure nevet viselte. A vSphere nevet 2009-ben vette fel amikor is a VI 3.5 folytatása már az új néven lett bemutatva. Az évek folyamán a korai verziók felül emelkedtek az ellenfeleken szolgáltatás kínálatban, mert sok olyan funkciót tartalmaztak amelyeket a konkurensek nem tudtak. Ugyanakkor ezekért a funkciókért felárat kellett fizetni. Microsoft Server 2016-al bemutatkozott Hyper-V már mindenben ugyanazt kínálja, csak más néven. 2008-ban ugyan ingyenessé tették az ESXi hipervizort, viszont az ingyenes nem licenszelt termék komoly megkötésekkel üzemel csak.  \\
 
-\noindent \textbf{ESXi} \\
+\subsubsection{ESXi}
 Az ESXi úgynevezett egyes típusú hipervizor. Ez annyit jelent, hogy nem egy alkalmazás amely az operációs rendszer fölé húz egy réteget amelyben képes virtuális gépeket futtatni, hanem egy kernel, amely futtatja a VM konténereket. Fontos megjegyeznem, hogy a Hyper-V is ugyanígy működik annyi különbséggel, hogy a szerepkör aktiválódása után, az újrainduláskor az operációs rendszer futtatása is a Hyper-V alá kerül be. Az ESXi egyik nagy előnye volt a kis mérete (kb 110MB telepítve) és ebből adódóan a patchelések szükségességének a ritkasága is, azonban a Microsoft Nano Server megjelenése óta ebben sem különbözik. 
 
 Az ESXi konzol képernyője ugyanúgy csak egy recovery console mint a Nano Server esetén, csak a legfontosabb beállításokat lehet innen elvégezni, minden másra ott a webfelület amelyet minden host futtat, vagy be lehet kötni vSphere konzolba. \\
 
-\noindent \textbf{vSphere} \\
+\subsubsection{vSphere} 
 A vSphere egy management tool amely az ESXi gazdagépeket és a VMware cloudban futó virtuális gépeket is képes kezelni. A 6.5-ös verzióval már ezek a szerverek is lehetnek cluster-ben így a központosított management felület mindig elérhető. Megjegyezném, hogy a Microsoft is rendelkezik egy ilyen termékkel amely a System Center csomag részét képező Virtual Machnie Manager. A VMM 2016 is már képes nagy rendelkezésre állású alkalmazásként futni. 
 
 A vSphere elérhető webfelületen - amely a 6.5-ös verziótól HTML5 alapú, korábban Java alapokon nyugvott - vagy előtelepített alkalmazásból vSphere Client, de akár REST API-on keresztül is. A management további formáját képezi a PowerCLI amely a VMware rendszerekhez ad PowerShell interfészt.
@@ -251,7 +252,7 @@ A vSphere elérhető webfelületen - amely a 6.5-ös verziótól HTML5 alapú, k
 \subsection{Oracle\textsuperscript{\textregistered} VM}
 Nem maradhatott ki az üzleti felhasználásra szánt virtualizációs megoldásokból az Oracle sem. Ugyan történelme nem nyúlik vissza olyan régre mint a konkurenseké, hiszen 2007-ben jelentették be, de az alapját adó Xen hipervizor már jóideje piacon volt. Az Oracle megoldása abból a szempontból tekinthető különlegesnek, hogy ez az egyetlen olyan megoldás amely támogat SPARC alapú szervereket gazdagépként. Jól lehet ez nem olyan nagyon meglepő hiszen a SPARC processzorok is Oracle által alapított technológia. Azért állíthatják, hogy ők nyújtják a legjobban optimalizált megoldást, mert a processzortól az alkalmazásig mindenre van saját megoldásuk. Jó alternatíva lehet az OVM, mert ingyenes ahogyan a rajta futó operációs rendszer is. Megfelelően megválasztott alkalmazás szerver esetén ott sem jelentkezik licensz költség. Ugyanakkor azt fontos észben tartani, hogy mindez csak addig van így ameddig nincs szükség támogatásra. A támogatás ugyanis előfizetéses konstrukcióban érhető el és minden építőelemre külön meg kell vásárolni. \\
 
-\noindent \textbf{OVM} \\
+\subsubsection{OVM} 
 A Xen Project által fejlesztett nyílt forráskódú hipervizorra épül. Kiviteltől függően SPARC vagy x86-os platformon is képes üzemelni. Támogatott virtuális gépek tekintetében nincs eltérés: Linux, Windows és Oracle Solaris operációs rendszerek lehetnek. A hardveres limitációk terén itt vannak komolyabb eltérések: \cite{OVMLimits} \\
 \begin{table}[ht]
 \centering
@@ -260,7 +261,7 @@ A Xen Project által fejlesztett nyílt forráskódú hipervizorra épül. Kivit
 		\hline
 		Futó virtuális gépek & 2560 db \newline(10 VM/host, 256 szerver) & 32768 db \newline(128 VM/host, 256 szerver)\\
 		Cluster node-ok & 32 db & 32 db \\
-		Szerver csoport tagok \newline (nem cluste-rezett) & 64 db & 64 db \\
+		Szerver csoport tagok \newline (nem cluster-ezett) & 64 db & 64 db \\
 		Logikai processzorok & 288 (tesztelt) \newline 384 (elméleti) & Megegyezik a maximális mennyiséggel:\begin{itemize}
 	\item SPARC M7-16: 4096 
 	\item SPARC M6: 3072 
@@ -271,22 +272,118 @@ A Xen Project által fejlesztett nyílt forráskódú hipervizorra épül. Kivit
 	\end{tabularx}
 \end{table}
 
-\noindent \textbf{Oracle VM Manager} \\
+\subsubsection{Oracle VM Manager} 
 Az Oracle megoldása a virtuális gépek és a cloudban található erőforrások menedzsmentjére. Amiben eltér a konkurensektől, hogy az Oracle tárolóegységeket is lehet ugyanebből a konzolból kezelni. \\
 
-\noindent \textbf{SPARC}\\
+\subsubsection{SPARC}
 A SUN Microsystems által feljesztet RISC tipusú utasításkészlettel rendelkező processzorcsalád. 1984-ben kezdődött a fejlesztése, azonban sokáig license köteles megoldás volt. A SPARC International konzorcium a teljes architektúrát nyílttá tette, az egységesség és az elterjedés elősegítése érdekében. 1993-ban megjelent a 64 bites verziója is, azonban az elterjedésének nagy gátat szabott, hogy a korlátozott utasításkészlet miatt nehezebb volt fejleszteni rá. A jól skálázható architektúrája alkalmassá tette, hogy több szuperszámítógépet is építsenek SPARC processzorokra. 2011-ben készült el a Tokiói egyetem szuperszámítógépe amely az Oakleaf-FX nevet viseli. Ez a TOP500 18. helyét szerezte meg akkoriban az összesen 76800 processzor magjával. Az alapját az 1,848 GHz-es SPARC64 IXfx  16 magos processzorok adják. \cite{SPARC}
 
 \section{Cloud megoldások}
+A szolgáltató szerverek elhelyezésekor 3 nagy irányzatot lehet megkülönböztetni. Ezek a On-Premises, Private cloud és Public cloud. 
+
+\subsubsection{On-Premises} 
+A dolgozatom előző bekezdésében már leírtam a főbb on-premises szolgáltatókat és azok képességeit. Ezeknél a szervek a cég álltal birtokolt területen kerülnek elhelyezésre megfelelő körülmények fenntartására képes szobákban. Minden hardver megvásárlásra vagy tartósbérletre kerül. Sok esetben az internet elérés és a bérelt vonalak költségei nagyon magasak.  Napjainkban még ez a legelterjedtebb forma, azonban a magas bekerülési költség miatt egyre inkább más írányokban gondolkodnak az üzemeltetést végző csapatok.\\
+
+\subsubsection{Private cloud}
+A következő lépcsőfok a telljesen felhőből kiszolgált szolgáltatásrendszer irányában. Ebben az esetben a szerverek számára az ideális környezeti feltételek biztosítását valamilyen Adatközpont szolgáltatóra (pl. Equinix) bizzák. Ezt a lépcsőfokot sok cég azért alkalmazza, mert még nem állnak készen, hogy a jelenleg megépített rendszereiket átmozgasság a felhőbe. További előnyökhöz felsorolható, hogy az adatközpontokból a minőségibb internet és bérelt vonal szolgáltatásokat helyiértékekkel alacsonyabb áron lehet beszerezni. Azoknak a cégeknek lehet érdemes ilyen rendszerek bérlésében gondolkodni, akik már rendelkeznek valamilyen cloud szolgáltatással, esetleg több kisméretű telephelyük van több országban. Az országhatárokon átívelő bérelt vonalak nagyon drágák, főként azok amelyek nem frekventált országokat kötnek össze. Azonban ha a frekventált, adatközpontokat tartalmazó országok irányába szeretnénk bérelt vonalat vásárolni, a költségek csökkenthetőek. \\
+Private cloud egyik alfajaként felfoghatóak azok a rendszerek, amelyek valamely nagy felhőszolgáltató technikáját használják fel arra, hogy a saját telephelyen található szervereket menedzsmentjére. Ilyen megoldás az Azure Pack, vagy az azt leváltó Azure Stack. \\
+
+\noindent \textbf{Azure Stack} \\
+A Microsoft álltal nyújtott Azure Pack utóda. Az előd még képes volt bármilyen szerveren elfutni, amely Hyper-V képes volt. A rendszer lényege, hogy a System Center csomag Virtual Machine Manager  alkalmazásán keresztül menedzseli a kiszolgálókon futó virtuális gépeket. Telljesen Azure szintű felhasználói élményt nyújtva. Egy nagyon egyszerű self-service megoldás, amelynek köszönhetően az üzemeltetést végző csapatok munkálya csökkenthető, hiszen a számítási kapacitást igénylő csapatok maguknak elkészíthetik a szükséges erőforrásaikat. A rendszer figyeli és tájékoztatja a felhasználót, hogy a rendelkezésre álló kapacitásból mennyit használt fel és az előre meghatározott rendszertípusokból mennyit képes még elfuttatni a kiszolgáló. \\
+Az Azure Stack hátránya, hogy csak a Microsoft álltal meghatározott és jóváhagyott hardverrel kompatibilis, amelyet egyenesen a partnerektől kell, hardver csomag - rack szekrény - formájában megvásárolni.  
+
+\subsubsection{Public cloud}
+Ez a legtelljesebb megoldás. Ilyenkor a vállalat számára a telephelyekre csak megfelelő minőségű internetet kell vásárolni, minden más rendszer a felhőben fut. A felhő nagy előnye, hogy az igényeknek megfelelően módosítható a felhasznált számítási, tárolási kapacitás. Természetesen minden felhőben futó alkalmazás egymással magas sebességgel képes kommunikálni, hiszen az adatközpontok között megfelelő minőségű kapcsolat van kiépítve. Továbbá amint azt korábban említettem az adatközpont szolgáltató cégeknél nem ritka, hogy a nagy felhőszolgáltatóknak vannak helyi erőforrásaik. Amint azt a továbbiakban látni lehet a \ref{fig:AzureRegions} és \ref{fig:AWSRegions} ábrákon, a felhő szolgáltatók is törekednek arra hogy ugyabban az országban, vagy városban települjenek le ahol a vetélytársak is, így nyújtva a legnagyobb sebességet. \\
+
+Látható, hogy a 3 irányzat hasonló, azonban telljesen más üzleti modelt szükséges építeni rá. A <Gartner?> elemzése szerint 2020 lesz az az év, amikor megfordul az arány és a felhőből, vagy co-located szerverfarmokról lesznek kiszolgálva a rendszerek lásd \ref{fig:CloudVsOnPrem} ábra.   
+% TODO
+\begin{figure}[H]
+\centering
+% \includegraphics[width=1\textwidth]{azure_locations.jpg}
+\caption{placeholder for cloud chart, forrás: Gartner.}
+\label{fig:CloudVsOnPrem}
+\end{figure}
+
+A \ref{fig:CloudVsOnPrem} ábrán jól látszik, hogy az elemzők szerint a cloud megoldások át fogják venni a kiszolgálás feladatát. Az évek során egyébként jól láthatóan formálódott a vállalatok hozzáállása a felhőhöz. A \ref{fig:3yearCloudvsOnPrem} ábráról leolvasható, hogy az elmúlt 3 évben a private cloud megoldások felől, a public cloud irányába fordulnak a vállalatok.
+\begin{figure}[H]
+\centering
+\includegraphics[width=1\textwidth]{4-Cloud-Computing-Trends-Enterprises-Prioritizing-Public-Cloud.png}
+\caption{Szolgáltatás lokációk megoszlásának változása az elmúlt 3 évben, forrás: \cite{RightScale}}
+\label{fig:3yearCloudvsOnPrem}
+\end{figure}
+
+Amielőtt a nagyobb felhő szolgáltatókról beszélnék, tanulságos lehet megvizsgálni a helyzetüket a piacon, lásd: \ref{fig:CloudAdoption2017-2018} ábra.
+\begin{figure}[H]
+\centering
+\includegraphics[width=1\textwidth]{22-Cloud-Computing-Trends-Enterprise-Public-Cloud-Adoption-2018-vs-2017.png}
+\caption{Éves növekedése a platformok felhasználásának, forrás: \cite{RightScale}}
+\label{fig:CloudAdoption2017-2018}
+\end{figure}
+
+A felhőben futó alkalmazások folyamatosan bővülnek, így érdekes viszonyszám, hogy mely platformon, mennyi a már beváltnak és stabilnak számító megoldás. Ezt mutatja a \ref{fig:CloudTrends2018} ábra. 
+\begin{figure}[H]
+\centering
+\includegraphics[width=1\textwidth]{23-Cloud-Computing-Trends-Enterprise-Public-Cloud-Adoption.png}
+\caption{Felhőszolgátatónál a rendszerek minősítésének arányai, forrás: \cite{RightScale}}
+\label{fig:CloudTrends2018}
+\end{figure}
+
+Jelneleg a többszáz szolgáltatás közül legdinamikusabban az adatbázisok és a serverless megoldások gyarapodtak, lásd \ref{fig:TopGrowingCloudServices}. Érthető, hiszen főleg az adatbázisoknál az adatmennyiség, és a feldolgozáshoz szükséges erőforrás közel exponenciálisan gyarapszik, így a hardverek ára közel csillagászati összegeket képes ölteni, főleg a mai üzleti helyzetben, amikor a memória chippekből hiány van. \\
+\begin{figure}[H]
+\centering
+\includegraphics[width=1\textwidth]{6-Cloud-Computing-Trends-Serverless-Top-Growing-Cloud-Service.png}
+\caption{Leggyorsabban növekedő felhőszolgáltatások, forrás: \cite{RightScale}}
+\label{fig:TopGrowingCloudServices}
+\end{figure}
+
 \subsection{Microsoft Azure}
-\cite{AzureFundamentals}
+\begin{figure}[H]
+\centering
+\includegraphics[width=1\textwidth]{azure_locations.jpg}
+\caption{Azure adatközpont lokációk, forrás: \cite{Azure_Regions}}
+\label{fig:AzureRegions}
+\end{figure}
+Eredetileg Windows Azure néven 2008 októberében jelentették be. Világszerte 50 régió, 140 országában találhatóak adatközpontjaik, ahogyan az a \ref{fig:AzureRegions} ábrán is látható. A kezdetektől fogva folyamatosan bővülő szolgáltatás kínálat jellemzi, így manapság már 600 szolgáltatás fölött kínálnak. A fontosabbak kategóriák: \cite{Azure_Services}\\
 
+\noindent \textbf{Compute:}\\
+Amennyiben felhős számítási kapacitásra, virtualizációra van szükség, az Azure on-demand szolgáltatásai a rendelkezés állnak. Mint minden felhő szolgáltatás esetén itt is csak akkor és annyit fizetsz amennyi felhasználásra kerül. \\
 
-\subsection{VMWare Cloud}
+\noindent \textbf{Network:}\\
+A felhőben futó rendszerek és a még on-premisses rendszerek között is meg kell teremteni az összesköttetést, hogy a felhasználók számára a legjobb élményt lehessen nyújtani. Legyen szó akár load balancer-ekről, site-to-site VPN-ről, DNS szolgáltatásról, DDoS védelemről, az Azure-ben mindezekre meglehet találni az alkalmas szolgáltatást.\\
 
+\noindent \textbf{Storage:}\\
+Skálázható felhőtárhely az adatok vagy a munkafolyamatok számára. Lényegében felső korlát nélkül lehet on-line tárhelyet rendelni az Azure szolgáltatásán keresztül, hiszen megfelelő konfiguráció esetén a tárhely mennyisége a tárolandó adatokkal együtt nő, így sosem akad meg a munkafolyamat azon, hogy nincs rendelekzésre álló tárterület. Archiválásra alkalmas tárhelyet is lehet vásárolni, amely nagyon alacsony költség mellett nyújt egy jó alternatívát, hiszen 0,002\$ / GB havonta amit a tárolásra kell fizetni, egyedül az adatok letöltésekor magasabb a költség 0,02\$. \\
 
-\subsection{Oracle Cloud}
+\noindent \textbf{Database:}\\
+Szinte mindegy milyen típusú adatbázisban vannak az adatok, vagy hogy milyen típusra van szükség az Azure-ben megtalálhatóak a legelterjedtebb adatbázismotorok. Amennyiben az adatbázis a Microsoft felhőszolgáltatásában került kialakításra az elérhetősége biztosan az SLA-ban meghatározott kereteken belül fog mozogni. A telljesítmény és a tárterület többet nem lesz gond, még akkor sem ha korábban alacsonyabb kategóriába tartozó rendszer lett igényelve. \\
 
+\noindent \textbf{Security + Identity:}\\
+Amennyiben a rendszereket függetleníteni kell az előre megvásárolandó hardverektől és rendszerektől. Telljes Active Directory struktúrát lehet a felhőben építeni, amely biztosan mindig elérhető lesz, amennyiben a kapcsolatot a felhővel fel tudja építeni a kliens. Napjainkban a többlépcsős azonosítás már kötelező tényező az adat és személyiség védelemben. Az Azure-ből egy kész megoldást lehet ilyen célra is bérelni. \\
+
+\noindent \textbf{Developer Tools:}\\
+Komoly feladatot jelent minden fejlesztést végző cég adminisztrátorai számára a megfelelő platform megtalálása, megépítése, üzemeltetése. Elvégre a fejlesztők napi munkálya múlik azon, hogy elérik-e a kódokat amelyeken dolgozniuk kell. A Microsoftnak természetesen erre is van megoldása, támogatja a legfőbb platformokat, igény esetén konzultációs szolgálatatásokat is igénybe lehet venni. \\
+
+\noindent \textbf{Management Tools:}\\
+Az üzemeltetés minden rendszernek a leghosszabb életciklusa. Ugyan telljesen autonóm módon nem képes a rendszer működni, de egy hagyományos on-premises infrastruktúrához képest jelentősen kisebb személyzet is képes egy telljes céget kiszolgáló infrastruktúrát üzemeltetni. A mindennapi munka megkönnyítésére létezik az Automation amely egy Orcestrator, így a támogatott rendszerk közül bármilyen technológia beköthető, legyen az a felhőben vagy lokálisan az adatközpontban. Publikuisan elérhető rendszereket mindig is valamilyen terhelés elosztó rendszeren keresztül lehetett elérni a nagyobb rendelkezésre állás garantálása érdekében. A Traffic Manager eggyel tovább megy egy szimpla terhelés elosztón, és itt már lokáció alapon képes mindig a legközelebbi (egkisebb késleltetésű) végponthoz irányítani a kommunikációt.  \\
+\newpage
+\subsection{AWS Cloud}
+Az első cloud szolgáltatás 2006-ban vált elérhetővé a nagyközösség számára. Ebben az évben még csak tárhelyet és számítási kapacitást lehetett elérni. Napjainkban 54 zónát számlálnak 18 geográfiai régión keresztül, ezek a számok folyamatosan bűvülnek.
+\begin{figure}[h]
+\centering
+\includegraphics[width=1\textwidth]{aws_locations.jpg}
+\caption{AWS adatközpont lokációk, forrás: \cite{AWS_Regions}}
+\label{fig:AWSRegions}
+\end{figure}
+
+Természetesen az Amazon mint a legnagyobb cloud platform szolgáltató, szolgáltatások széles választékát nyújtja. Az elsőségét komolyan fenyegeti a Microsoft megoldása, rohamosan jönnek fel az évek során, amint az a \ref{fig:CloudAdoption2017-2018} ábrán is láthattuk.  \\
+
+Jelenleg még jól látható, hogy a cégek kisebb lábnyommal rendelkeznek a felhőben, lásd \ref{fig:VMsPerCompany}. Nagyon alacsony azok száma akiknek többszáz virtuális gépe futna. 
+\begin{figure}[H]
+\centering
+\includegraphics[width=1\textwidth]{26-Cloud-Computing-Trends-Number-of-VMs.png}
+\caption{Virtuális gépek számának eloszlása cégenként, forrás: \cite{RightScale}}
+\label{fig:VMsPerCompany}
+\end{figure}
 
 \chapter{Esettanulmány}
 
@@ -298,7 +395,7 @@ Amint azt már fentebb leírtam, ezeknek a vállalkozásoknak ingadozó a növek
 \noindent \textbf{IaaS} - Infractructure as a Service \cite{IaaS}
 
 Átmenetet képez a klasszikus infrastruktúrális kiépítés és a teljesen felhőből kiszolgált rendszerek között. A szolgáltató ilyen esetben nyújta a biztonságos és stabil szolgáltatássokkal ellátott adatközpontot és a szervert, továbbá vállalja a fizikai üzemeltetést, lásd: \ref{fig:aaS} ábra. Mindent ami erre épül (operációs rendszer, alkalmazások, adatok) az igénylő üzemelteti és kezeli. 
-\begin{figure}[ht]
+\begin{figure}[h]
 \centering
 \includegraphics[width=0.9\textwidth]{aaS.jpg}
 \caption{Szolgáltatási szintek}
@@ -325,10 +422,9 @@ Meg kell határozni a következő tényezőket:
 
 \section{Ajánlat}
 
+% TODO
 
-\section{Migráció cloudba}
-
-
+%\section{Migráció cloudba}
 
 \chapter{Esettanulmány háttércég}
 
@@ -353,7 +449,7 @@ Fontos szempont, hogy egy megrendelt rendszer mennyi időn belül lesz használa
 Ha a klasszikus IaaS szemléletet vesszük alapul, akkor a szolgáltatónak csak a szervert vagy a virtuális gépet kell előkészíteni, hozzáférést garantálni és a rendszer használatba is vehető. Az elkészítésre fordított szinte minimális hiszen virtualizált rendszerek esetén akár teljesen automatikusan is megtörténhet minden lépés a megrendeléstől az átadásig. Amennyiben fizikai hardvert használ a megrendelő, akkor elő kell készíteni a hardvert az adatközpontban és a megfelelő konfiguráció elkészítése után adható csak át. Természetesen ilyenkor az operációs rendszer telepítése a végfelhasználóra marad. \\
 
 A következő lépcsőfok, amikor az operációs rendszert és alkalmazásokat is előtelepítve adjuk át a rendszereket. Fontos megemlíteni, hogy nem minden megrendelést lehet valamilyen előre megalkotott rendszerrel kiszolgálni. Ugyanakkor az esetek jelentős részét előre definiált alkalmazás palettával le lehet fedni. A Microsoft létrehozott egy Lite Touch megoldást amelyet Microsoft Deployment Toolkit-nek nevezett - továbbiakban MDT. Az MDT nagy előnye hogy az operációs rendszer feltelepítését, annak konfigurálását és az olyan alkalmazások telepítését amelyek rendelkeznek felügyeletlen telepítővel teljesen automatikusan elvégzi. Amennyiben olyan módosítást szeretnénk elvégezni, amely nem automatizálható, úgy a telepítés addig felhasználói beavatkozásra vár. Azért hívják lite touch-nak mert ténylegesen csak azoknál a lépéseknél igényel felhasználói interakciót amelyeket nem tud magától elvégezni és a telepítés elindításkor. Az MDT univerzális eszköz mert alkalmas virtuális gépek és fizikai hardverek telepítésésre is, ugyanakkor a fizikai gépek esetén még a driverek telepítését is elvégzi. Az MDT előnye egyben az egyik hátránya is. A teljes telepítéshez szükséges adatmennyiséget át kell vinni a hálózaton és a telepítéskor jelentkező terhelést a hardverre nem lehet lecsökkenteni. Alapját a Preboot eXecution Environment - továbbiakban PXE - adja amely egy nagyon kisméretű rendszer, ez hozzáférést garantál a hardverhez és elvégzi az operációs rendszer telepítés részeit, a többi beállítást már a windows telepítés post-install szekciójában maga a rendszer futtatja le.  \\
-\begin{figure}[ht]
+\begin{figure}[h]
 \centering
 \includegraphics[width=1\textwidth]{mdt.png}
 \caption{MDT telepítési képernyő, forrás \cite{MDTImage}}
@@ -389,19 +485,12 @@ A kódok végrehajtása az előkövetelményeknek megfelelően történik:
 
 Virtuális switchek tulajdonságát korábban taglaltam. A cégnél a megrendelők rendszerei teljesen elszeparált rendszerek, hacsak a megrendelők másképp nem rendelkeznek. Ellenben a virtuális gépek amelyek egy megrendelőhöz kötődnek egymással közös hálózaton vannak. Szolgáltatói oldalon a cégekhez tartozó erőforrások azonosítása érdekében a megrendelő cég nevét eléfűzöm az erőforrás nevéhez. Amennyiben már létezik ilyen erőforrás úgy a script küld egy email üzenetet az üzemeltetőnek, hogy manuális ellenőrzésre van szükség.
 
-% \\TODO ?
-
 \subsubsection{Create-VM.ps1}
 
 A script egy az argumentumaiban szereplő paramétereknek megfelelő VM konténert hoz létre. A beállításokat tekintve, ha valamelyik paraméter nincs felülbírálva az argumentumokban, akkor a korábban már taglalt alapbeállítás kerül felhasználásra.
 
 A script úgy lett elkészítve, hogy képes felismerni ha valamelyik lemez VHDX állománya már létezik.
-
-
 % \\TODO
-
-
-
 
 \subsubsection{Post-Configuration.ps1}
 % \\TODO
@@ -419,6 +508,7 @@ Biztonsági szempontból a weboldalt aktualizáló kódnak nincs még olvasási 
 
 \subsection{Cloud}
 \noindent
+
 
 \chapter{PowerShell}
 A shell mint fogalom az informatikában a kezdetektől fogva létezik. A shell tulajdonképpen nem más, mint egy interfész amely lehetővé teszi a felhasználó és az operációs rendszer közötti interakciót. A shell lényegében nem egy alkalmazás a megkerülhetetlensége miatt, de nagyon hasonló bármely más folyamathoz a rendszerben. A shell-ek attól függően, hogy milyen operációs rendszeren találhatóak, lehetnek parancssoros (UNIX, Linux, VMS) vagy grafikus interfészek (Windows vagy Mac OS X). Továbbiakban az angol terminológiából származtatott rövidítéseket fogom használni, a parancssoros felületre a Command-Line Interface azaz CLI-t, míg a grafikus interfészre a Graphical User Interface azaz GUI-t.
