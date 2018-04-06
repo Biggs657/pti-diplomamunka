@@ -273,14 +273,7 @@ A Xen Project által fejlesztett nyílt forráskódú hipervizorra épül. Kivit
 \end{table}
 
 \subsubsection{Oracle VM Manager} 
-<<<<<<< HEAD
-<<<<<<< HEAD
 Az Oracle megoldása a virtuális gépek és a cloudban található erőforrások menedzsmentjére. Amiben eltér a konkurensektől, hogy az Oracle tárolóegységeket is lehet ugyanebből a konzolból kezelni. 
-=======
-=======
->>>>>>> c8aa814b32865d3f84a8f6d1c1c5d26d75aebb00
-Az Oracle megoldása a virtuális gépek és a cloudban található erőforrások menedzsmentjére. Amiben eltér a konkurensektől, hogy az Oracle tárolóegységeket is lehet ugyanebből a konzolból kezelni. \\
->>>>>>> c8aa814b32865d3f84a8f6d1c1c5d26d75aebb00
 
 \subsubsection{SPARC}
 A SUN Microsystems által feljesztet RISC tipusú utasításkészlettel rendelkező processzorcsalád. 1984-ben kezdődött a fejlesztése, azonban sokáig license köteles megoldás volt. A SPARC International konzorcium a teljes architektúrát nyílttá tette, az egységesség és az elterjedés elősegítése érdekében. 1993-ban megjelent a 64 bites verziója is, azonban az elterjedésének nagy gátat szabott, hogy a korlátozott utasításkészlet miatt nehezebb volt fejleszteni rá. A jól skálázható architektúrája alkalmassá tette, hogy több szuperszámítógépet is építsenek SPARC processzorokra. 2011-ben készült el a Tokiói egyetem szuperszámítógépe amely az Oakleaf-FX nevet viseli. Ez a TOP500 18. helyét szerezte meg akkoriban az összesen 76800 processzor magjával. Az alapját az 1,848 GHz-es SPARC64 IXfx  16 magos processzorok adják. \cite{SPARC}
@@ -289,8 +282,6 @@ A SUN Microsystems által feljesztet RISC tipusú utasításkészlettel rendelke
 A szolgáltató szerverek elhelyezésekor 3 nagy irányzatot lehet megkülönböztetni. Ezek a On-Premises, Private cloud és Public cloud. 
 
 \subsubsection{On-Premises} 
-<<<<<<< HEAD
-<<<<<<< HEAD
 A dolgozatom előző bekezdésében már leírtam a főbb on-premises szolgáltatókat és azok képességeit. A szervek a cég álltal birtokolt területen kerülnek elhelyezésre megfelelő körülmények fenntartására képes szerver szobákban. Minden hardver megvásárlásra vagy tartósbérletre kerül. Sok esetben az internet elérés és a bérelt vonalak költségei nagyon magasak. Napjainkban még ez a legelterjedtebb forma, azonban a magas bekerülési költség miatt egyre inkább más írányokban gondolkodnak az üzemeltetést végző csapatok.
 
 \subsubsection{Private cloud}
@@ -313,36 +304,6 @@ Az elmúlt években érezhető a felhő felé fordulás, mert minden cégnek ér
 \end{figure}
 
 Az évek során jól láthatóan formálódott a vállalatok hozzáállása a felhőhöz. A \ref{fig:3yearCloudvsOnPrem} ábráról leolvasható, hogy az elmúlt 3 évben a private cloud megoldások felől, a public cloud irányába fordulnak a vállalatok.
-=======
-=======
->>>>>>> c8aa814b32865d3f84a8f6d1c1c5d26d75aebb00
-A dolgozatom előző bekezdésében már leírtam a főbb on-premises szolgáltatókat és azok képességeit. Ezeknél a szervek a cég álltal birtokolt területen kerülnek elhelyezésre megfelelő körülmények fenntartására képes szobákban. Minden hardver megvásárlásra vagy tartósbérletre kerül. Sok esetben az internet elérés és a bérelt vonalak költségei nagyon magasak.  Napjainkban még ez a legelterjedtebb forma, azonban a magas bekerülési költség miatt egyre inkább más írányokban gondolkodnak az üzemeltetést végző csapatok.\\
-
-\subsubsection{Private cloud}
-A következő lépcsőfok a telljesen felhőből kiszolgált szolgáltatásrendszer irányában. Ebben az esetben a szerverek számára az ideális környezeti feltételek biztosítását valamilyen Adatközpont szolgáltatóra (pl. Equinix) bizzák. Ezt a lépcsőfokot sok cég azért alkalmazza, mert még nem állnak készen, hogy a jelenleg megépített rendszereiket átmozgasság a felhőbe. További előnyökhöz felsorolható, hogy az adatközpontokból a minőségibb internet és bérelt vonal szolgáltatásokat helyiértékekkel alacsonyabb áron lehet beszerezni. Azoknak a cégeknek lehet érdemes ilyen rendszerek bérlésében gondolkodni, akik már rendelkeznek valamilyen cloud szolgáltatással, esetleg több kisméretű telephelyük van több országban. Az országhatárokon átívelő bérelt vonalak nagyon drágák, főként azok amelyek nem frekventált országokat kötnek össze. Azonban ha a frekventált, adatközpontokat tartalmazó országok irányába szeretnénk bérelt vonalat vásárolni, a költségek csökkenthetőek. \\
-Private cloud egyik alfajaként felfoghatóak azok a rendszerek, amelyek valamely nagy felhőszolgáltató technikáját használják fel arra, hogy a saját telephelyen található szervereket menedzsmentjére. Ilyen megoldás az Azure Pack, vagy az azt leváltó Azure Stack. \\
-
-\noindent \textbf{Azure Stack} \\
-A Microsoft álltal nyújtott Azure Pack utóda. Az előd még képes volt bármilyen szerveren elfutni, amely Hyper-V képes volt. A rendszer lényege, hogy a System Center csomag Virtual Machine Manager  alkalmazásán keresztül menedzseli a kiszolgálókon futó virtuális gépeket. Telljesen Azure szintű felhasználói élményt nyújtva. Egy nagyon egyszerű self-service megoldás, amelynek köszönhetően az üzemeltetést végző csapatok munkálya csökkenthető, hiszen a számítási kapacitást igénylő csapatok maguknak elkészíthetik a szükséges erőforrásaikat. A rendszer figyeli és tájékoztatja a felhasználót, hogy a rendelkezésre álló kapacitásból mennyit használt fel és az előre meghatározott rendszertípusokból mennyit képes még elfuttatni a kiszolgáló. \\
-Az Azure Stack hátránya, hogy csak a Microsoft álltal meghatározott és jóváhagyott hardverrel kompatibilis, amelyet egyenesen a partnerektől kell, hardver csomag - rack szekrény - formájában megvásárolni.  
-
-\subsubsection{Public cloud}
-Ez a legtelljesebb megoldás. Ilyenkor a vállalat számára a telephelyekre csak megfelelő minőségű internetet kell vásárolni, minden más rendszer a felhőben fut. A felhő nagy előnye, hogy az igényeknek megfelelően módosítható a felhasznált számítási, tárolási kapacitás. Természetesen minden felhőben futó alkalmazás egymással magas sebességgel képes kommunikálni, hiszen az adatközpontok között megfelelő minőségű kapcsolat van kiépítve. Továbbá amint azt korábban említettem az adatközpont szolgáltató cégeknél nem ritka, hogy a nagy felhőszolgáltatóknak vannak helyi erőforrásaik. Amint azt a továbbiakban látni lehet a \ref{fig:AzureRegions} és \ref{fig:AWSRegions} ábrákon, a felhő szolgáltatók is törekednek arra hogy ugyabban az országban, vagy városban települjenek le ahol a vetélytársak is, így nyújtva a legnagyobb sebességet. \\
-
-Látható, hogy a 3 irányzat hasonló, azonban telljesen más üzleti modelt szükséges építeni rá. A <Gartner?> elemzése szerint 2020 lesz az az év, amikor megfordul az arány és a felhőből, vagy co-located szerverfarmokról lesznek kiszolgálva a rendszerek lásd \ref{fig:CloudVsOnPrem} ábra.   
-% TODO
-\begin{figure}[H]
-\centering
-% \includegraphics[width=1\textwidth]{azure_locations.jpg}
-\caption{placeholder for cloud chart, forrás: Gartner.}
-\label{fig:CloudVsOnPrem}
-\end{figure}
-
-A \ref{fig:CloudVsOnPrem} ábrán jól látszik, hogy az elemzők szerint a cloud megoldások át fogják venni a kiszolgálás feladatát. Az évek során egyébként jól láthatóan formálódott a vállalatok hozzáállása a felhőhöz. A \ref{fig:3yearCloudvsOnPrem} ábráról leolvasható, hogy az elmúlt 3 évben a private cloud megoldások felől, a public cloud irányába fordulnak a vállalatok.
-<<<<<<< HEAD
->>>>>>> c8aa814b32865d3f84a8f6d1c1c5d26d75aebb00
-=======
->>>>>>> c8aa814b32865d3f84a8f6d1c1c5d26d75aebb00
 \begin{figure}[H]
 \centering
 \includegraphics[width=1\textwidth]{4-Cloud-Computing-Trends-Enterprises-Prioritizing-Public-Cloud.png}
@@ -384,15 +345,7 @@ Jelneleg a többszáz szolgáltatás közül legdinamikusabban az adatbázisok �
 Eredetileg Windows Azure néven 2008 októberében jelentették be. Világszerte 50 régió, 140 országában találhatóak adatközpontjaik, ahogyan az a \ref{fig:AzureRegions} ábrán is látható. A kezdetektől fogva folyamatosan bővülő szolgáltatás kínálat jellemzi, így manapság már 600 szolgáltatás fölött kínálnak. A fontosabbak kategóriák: \cite{Azure_Services}\\
 
 \noindent \textbf{Compute:}\\
-<<<<<<< HEAD
-<<<<<<< HEAD
 Amennyiben felhős számítási kapacitásra, virtualizációra van szükség, az Azure on-demand szolgáltatásai a rendelkezésre állnak. A legkisebb osztott processzor időt kapó gépektől, egészen a fizikai hardverek felső korlátozásaiig, akár automatikus skálázással. Mint minden felhő szolgáltatás esetén itt is csak akkor és annyit kell fizetni amennyi felhasználásra került. \\
-=======
-Amennyiben felhős számítási kapacitásra, virtualizációra van szükség, az Azure on-demand szolgáltatásai a rendelkezés állnak. Mint minden felhő szolgáltatás esetén itt is csak akkor és annyit fizetsz amennyi felhasználásra kerül. \\
->>>>>>> c8aa814b32865d3f84a8f6d1c1c5d26d75aebb00
-=======
-Amennyiben felhős számítási kapacitásra, virtualizációra van szükség, az Azure on-demand szolgáltatásai a rendelkezés állnak. Mint minden felhő szolgáltatás esetén itt is csak akkor és annyit fizetsz amennyi felhasználásra kerül. \\
->>>>>>> c8aa814b32865d3f84a8f6d1c1c5d26d75aebb00
 
 \noindent \textbf{Network:}\\
 A felhőben futó rendszerek és a még on-premisses rendszerek között is meg kell teremteni az összesköttetést, hogy a felhasználók számára a legjobb élményt lehessen nyújtani. Legyen szó akár load balancer-ekről, site-to-site VPN-ről, DNS szolgáltatásról, DDoS védelemről, az Azure-ben mindezekre meglehet találni az alkalmas szolgáltatást.\\
@@ -402,7 +355,6 @@ Skálázható felhőtárhely az adatok vagy a munkafolyamatok számára. Lényeg
 
 \noindent \textbf{Database:}\\
 Szinte mindegy milyen típusú adatbázisban vannak az adatok, vagy hogy milyen típusra van szükség az Azure-ben megtalálhatóak a legelterjedtebb adatbázismotorok. Amennyiben az adatbázis a Microsoft felhőszolgáltatásában került kialakításra az elérhetősége biztosan az SLA-ban meghatározott kereteken belül fog mozogni. A telljesítmény és a tárterület többet nem lesz gond, még akkor sem ha korábban alacsonyabb kategóriába tartozó rendszer lett igényelve. \\
-<<<<<<< HEAD
 
 \noindent \textbf{Security + Identity:}\\
 Amennyiben a rendszereket függetleníteni kell az előre megvásárolandó hardverektől és rendszerektől. Telljes Active Directory struktúrát lehet a felhőben építeni, amely biztosan mindig elérhető lesz, amennyiben a kapcsolatot a felhővel fel tudja építeni a kliens. Napjainkban a többlépcsős azonosítás már kötelező tényező az adat és személyiség védelemben. Az Azure-ből egy kész megoldást lehet ilyen célra is bérelni. \\
@@ -411,7 +363,6 @@ Amennyiben a rendszereket függetleníteni kell az előre megvásárolandó hard
 Komoly feladatot jelent minden fejlesztést végző cég adminisztrátorai számára a megfelelő platform megtalálása, megépítése, üzemeltetése. Elvégre a fejlesztők napi munkálya múlik azon, hogy elérik-e a kódokat amelyeken dolgozniuk kell. A Microsoftnak természetesen erre is van megoldása, támogatja a legfőbb platformokat, igény esetén konzultációs szolgálatatásokat is igénybe lehet venni. \\
 
 \noindent \textbf{Management Tools:}\\
-<<<<<<< HEAD
 Az üzemeltetés minden rendszernek a leghosszabb életciklusa. Ugyan telljesen autonóm módon nem képes a rendszer működni, de egy hagyományos on-premises infrastruktúrához képest jelentősen kisebb személyzet is képes egy telljes céget kiszolgáló infrastruktúrát üzemeltetni. A mindennapi munka megkönnyítésére létezik az Automation amely egy Orcestrator, így a támogatott rendszerk közül bármilyen technológia beköthető, legyen az a felhőben vagy lokálisan az adatközpontban. A Traffic Manager több mint egy szimpla terhelés elosztó, lokáció alapon képes mindig a legközelebbi (legkisebb késleltetésű) végponthoz irányítani a kommunikációt. 
 
 \subsection{AWS Cloud}
@@ -425,44 +376,6 @@ Az első cloud szolgáltatás 2006-ban vált elérhetővé a nagyközösség sz�
 
 Természetesen az Amazon mint a legnagyobb cloud platform szolgáltató, szolgáltatások széles választékát nyújtja. Az elsőségét komolyan fenyegeti a Microsoft megoldása, rohamosan jönnek fel az évek során, amint az a \ref{fig:CloudAdoption2017-2018} ábrán is láthattuk.  \\
 
-=======
-Az üzemeltetés minden rendszernek a leghosszabb életciklusa. Ugyan telljesen autonóm módon nem képes a rendszer működni, de egy hagyományos on-premises infrastruktúrához képest jelentősen kisebb személyzet is képes egy telljes céget kiszolgáló infrastruktúrát üzemeltetni. A mindennapi munka megkönnyítésére létezik az Automation amely egy Orcestrator, így a támogatott rendszerk közül bármilyen technológia beköthető, legyen az a felhőben vagy lokálisan az adatközpontban. Publikuisan elérhető rendszereket mindig is valamilyen terhelés elosztó rendszeren keresztül lehetett elérni a nagyobb rendelkezésre állás garantálása érdekében. A Traffic Manager eggyel tovább megy egy szimpla terhelés elosztón, és itt már lokáció alapon képes mindig a legközelebbi (egkisebb késleltetésű) végponthoz irányítani a kommunikációt.  \\
-\newpage
-\subsection{AWS Cloud}
-Az első cloud szolgáltatás 2006-ban vált elérhetővé a nagyközösség számára. Ebben az évben még csak tárhelyet és számítási kapacitást lehetett elérni. Napjainkban 54 zónát számlálnak 18 geográfiai régión keresztül, ezek a számok folyamatosan bűvülnek.
-\begin{figure}[h]
-\centering
-\includegraphics[width=1\textwidth]{aws_locations.jpg}
-\caption{AWS adatközpont lokációk, forrás: \cite{AWS_Regions}}
-\label{fig:AWSRegions}
-\end{figure}
-
-Természetesen az Amazon mint a legnagyobb cloud platform szolgáltató, szolgáltatások széles választékát nyújtja. Az elsőségét komolyan fenyegeti a Microsoft megoldása, rohamosan jönnek fel az évek során, amint az a \ref{fig:CloudAdoption2017-2018} ábrán is láthattuk.  \\
-
->>>>>>> c8aa814b32865d3f84a8f6d1c1c5d26d75aebb00
-=======
-
-\noindent \textbf{Security + Identity:}\\
-Amennyiben a rendszereket függetleníteni kell az előre megvásárolandó hardverektől és rendszerektől. Telljes Active Directory struktúrát lehet a felhőben építeni, amely biztosan mindig elérhető lesz, amennyiben a kapcsolatot a felhővel fel tudja építeni a kliens. Napjainkban a többlépcsős azonosítás már kötelező tényező az adat és személyiség védelemben. Az Azure-ből egy kész megoldást lehet ilyen célra is bérelni. \\
-
-\noindent \textbf{Developer Tools:}\\
-Komoly feladatot jelent minden fejlesztést végző cég adminisztrátorai számára a megfelelő platform megtalálása, megépítése, üzemeltetése. Elvégre a fejlesztők napi munkálya múlik azon, hogy elérik-e a kódokat amelyeken dolgozniuk kell. A Microsoftnak természetesen erre is van megoldása, támogatja a legfőbb platformokat, igény esetén konzultációs szolgálatatásokat is igénybe lehet venni. \\
-
-\noindent \textbf{Management Tools:}\\
-Az üzemeltetés minden rendszernek a leghosszabb életciklusa. Ugyan telljesen autonóm módon nem képes a rendszer működni, de egy hagyományos on-premises infrastruktúrához képest jelentősen kisebb személyzet is képes egy telljes céget kiszolgáló infrastruktúrát üzemeltetni. A mindennapi munka megkönnyítésére létezik az Automation amely egy Orcestrator, így a támogatott rendszerk közül bármilyen technológia beköthető, legyen az a felhőben vagy lokálisan az adatközpontban. Publikuisan elérhető rendszereket mindig is valamilyen terhelés elosztó rendszeren keresztül lehetett elérni a nagyobb rendelkezésre állás garantálása érdekében. A Traffic Manager eggyel tovább megy egy szimpla terhelés elosztón, és itt már lokáció alapon képes mindig a legközelebbi (egkisebb késleltetésű) végponthoz irányítani a kommunikációt.  \\
-\newpage
-\subsection{AWS Cloud}
-Az első cloud szolgáltatás 2006-ban vált elérhetővé a nagyközösség számára. Ebben az évben még csak tárhelyet és számítási kapacitást lehetett elérni. Napjainkban 54 zónát számlálnak 18 geográfiai régión keresztül, ezek a számok folyamatosan bűvülnek.
-\begin{figure}[h]
-\centering
-\includegraphics[width=1\textwidth]{aws_locations.jpg}
-\caption{AWS adatközpont lokációk, forrás: \cite{AWS_Regions}}
-\label{fig:AWSRegions}
-\end{figure}
-
-Természetesen az Amazon mint a legnagyobb cloud platform szolgáltató, szolgáltatások széles választékát nyújtja. Az elsőségét komolyan fenyegeti a Microsoft megoldása, rohamosan jönnek fel az évek során, amint az a \ref{fig:CloudAdoption2017-2018} ábrán is láthattuk.  \\
-
->>>>>>> c8aa814b32865d3f84a8f6d1c1c5d26d75aebb00
 Jelenleg még jól látható, hogy a cégek kisebb lábnyommal rendelkeznek a felhőben, lásd \ref{fig:VMsPerCompany}. Nagyon alacsony azok száma akiknek többszáz virtuális gépe futna. 
 \begin{figure}[H]
 \centering
