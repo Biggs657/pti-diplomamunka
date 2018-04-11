@@ -408,21 +408,27 @@ Az igényfelmérés több lépcsőből áll.
 Ez az első lépése a követelmények felmérésének. Ez a szekció egyszer történik meg, ilyenkor a megrendelő és a szolgáltató egy embere - akik nem feltétlenül rendelkeznek technikai tudással - egy megbeszélés során összeszedik, hogy mit szeretnének elérni. 
 
 \subsubsection{Technikai feltételek meghatározása}
-Ez a feltárási művelet akár többször is megtörténhet még mielőtt elérnék a végső állapotot. Ebben a szekcióban már a technikai megbeszéléseknek is meg kell történni. 
-Meg kell határozni a következő tényezőket:
-\begin{itemize}
-	\item Operációs rendszer meghatározása - ha lényeges a keretrendszer miatt
-	\item A keretrendszer kiválasztása
-	\item A hardver specifikációnak méretezése - fejlesztés, teszt és élő rendszerekre
-	\item A front-end és back-end rendszerek meghatározása
-	\item Egyéb kapcsolódó szolgáltatások feltárása 
-\end{itemize}
+Ez a megbeszélés akár többször is megtörténhet még mielőtt elérnék a végső állapotot. Ebben a szekcióban már a technikai megbeszéléseknek is meg kell történni. Ezek alatt a találkozók alatt meg kell határozni a következő tényezőket:
+
+\textbf{Operációs rendszer meghatározása:} Sosem egyszerű feladat megtalálni az optimális operációs rendszert. Az alapelv az, hogy minél modernebb rendszert futtassunk. Fontos szempont még, hogy szerver környezetben szerver operációs rendszereket használjunk. Ezek egyrészről fel vannak készítve a 24/7 futtatásra, másrészt rendelkeznek a menedzsmenthez szükséges szolgáltatásokkal nem elhanyagolható tulajdonságuk még, hogy az asztali rendszerekkel ellentétben sokkal magasabb memória és processzor számot képesek támogatni. Említésre méltó még, hogy minden operációs rendszer amely rendelkezik grafikus felhasználói felülettel, arra egyszerre kettő felhasználó tud Remote Desktop Protocol-on keresztül kapcsolódni, amely a megrendelők munkályát nagyban segítheti, hiszen nem lehet elvárni mindekitől, hogy ismerjék a távoli menedzsment eszközöket. \newline
+\indent\textbf{A keretrendszer kiválasztása:} Minden alkalmazásnak szüksége van egy futtató környezetre, ez lehet a Windowsba beépített alap, Microsoft termékek valamely verziója vagy akár egy harmadik féltől származó megoldás. Ha csak az alkalmazás üzemeltetését végzi a megrendelő, akkor ennek a tényezőnek a meghatározása kell, hogy legyen az egyik legsarkallatosabb pont a feltárás során.  \\
+\indent\textbf{A hardver specifikációnak méretezése} - fejlesztés, teszt és élő rendszerekre: Mint azt már korábban a felhőszolgáltatókat igénybe vevő cégeknél is említettem, lényeges a takarékosság. Üzemeltetés szempontjából három fő szakaszt különböztetünk meg és vizsgáljuk meg az igényeiket. \\ Az első a fejlesztés. Ilyenkor az alkalmazás, adatbázis fájl szerverek kapják a terhelést, ugyan a felhasználók száma alacsony, egy nagyobb programkód fordítása komoly erőforrásigényt jelenthet. Ebben a fázisban a terhelések szakaszosan érkeznek azonban akkor nagy mértékben. Érdemes megfigyelni, hogy mennyi erőforrást emészt fel a rendszer ilyen esetben, mert ez az adat fontos lesz a végleges élő rendszer méretezésekor. \\ A teszt fázis többször is lehet az alkalmazás fejlesztése alatt, de ha máskor nem akkor élesbe állítás előtt és új funkció bevezetését megelőzően. A tesztelésekkor egyszerre több felhasználó fogja használnatba venni a rendszert. Ilyenkor figyelemmel kell követni az erőforrások kihasználtságát. Amennyiben a megrendelő tudja, hogy a végleges alkalmazást hány felhasználó fogja egyszerre használni, úgy teszt időszakban tapasztalt igényekből már lehet számolni. Érdemes egy terheléses tesztet is elvégeztetni a megrendelőkkel, ilyenkor mindegy mit csinálnak a felhasználók, a lényeg, hogy egyszerre sokan a véglegeshez minél közelebbi számban vagy afölött használják a rendszert. Így könnyen meg lehet határozni, hogy melyik részegység méretét kell módosítani.  \\
+A harmadik fázis az élő rendszer üzemeltetése. Az alkalmazást felhasználók mennyisége folyamatosan változni fog, így a rendszerekre mért terhelés sem lesz konstans, azonban a kilengés lényegesen kisebb mértékű lesz mint az előző két fázis alatt. Ez egy lényeges tulajdonság amely folyamatos megfigyelés alatt tartott szerverek esetén megelőzhetővé teszi az erőforrás túlterhelésből adódó lassulásokat, leállásokat, így szükség esetén az élettartam alatt növelhető a kiszolgálók telljesítménye.  \\
+\indent \textbf{A front-end és back-end rendszerek meghatározása:} Megrendelői igénytől függ, hogy a front-end megoldás meghatározására szükség van-e ellenben a back-end megoldásban mindig szükséges megállapodni. A szolgáltatók ismerik, hogy a méterezéskor megállapított teljesítményt mely rendszereik képesek telljesíteni, és azok milyen képességekkel rendelkeznek. Ezen adatok tudatában könnyedén kiválasztható, hogy mi fogja a megrenedlői igényt a legköltséghatékonyabban kiszolgálni. \\
+\indent \textbf{Egyéb kapcsolódó szolgáltatások feltárása:} Kapcsolódó szolgáltatások megrendeléstől függenek, legtöbbször nincs rájuk példa, azonban előfordulhat, hogy meg kell felelni bizonyos előírásoknak. Ilyen előírás lehet például az Európai Unió legújabb rendelete mely szerint az európai lakhellyel rendelkező állampolgár adatait tároló cégnek, igény esetén meg kell tudni mondani mely országban és azon belül mely eszközön található. \\
 
 
 \section{Ajánlat}
+Azt már korábban említettem, hogy egy olyan esetet dolgozok fel, ahol egy Start-Up cég keres szolgáltatót. Ennek a szolgáltatónak látom el a szerepét én. Az érdekességé a szituációnak az adja, hogy már korábbról maradt meg hardvere a megrendelőnek és szeretnék, ha azt is használhatnák. Ez számomra nem jelent problémát, mert a rendszer úgy van megtervezve és megépítve, hogy bárhol lehetnek a menedzselt gazdagépek, csak egy közös tárhelyre van szükség amelyre minden komponens írási joggal rendelkezik.  
 
-% TODO
-
+Amint az az igényfelmérés során kiderült a megrendelő játékfejlesztéssel foglalkozó csapat. Ennek megfelelően szükségük van: 
+\begin{itemize}
+\item csapatmunkát elősegítő verziókövetésre alkalmas rendszerre - ahol a kódokat tárolják 
+\item a nagy kódbázis fordítását elvégző szerverekre 
+\item webszerverre amely az elkészült terméket fogja a vásárlók felé továbbítani 
+\item általános célú fájlszerverre, amelyen a fejlesztéshez használt képanyagos és egyéb adatokat tárolnak majd.
+\item vállalati irányítási szoftver kiszolgálóra
+\end{itemize}
 %\section{Migráció cloudba}
 
 \chapter{Esettanulmány háttércég}
@@ -460,6 +466,25 @@ Hasonló megoldás, de másabb megközelítés amikor egy admin előtelepíti a 
 Az előbb látott módszereket tovább lehet fejleszteni, ellenben az már külön alkalmazáscsomag megvásárlását igényli. A Microsoft System Center alkalmazáscsomag része a Configuration Manager. Amennyiben rendelkezik a szolgáltató ezzel az alkalmazással, úgy elérhető bizonyos esetekben a Zero Touch telepítés is. Megjegyzendő, hogy a Zero Touch csak akkor fogható fel ténylegesen nulla interakciót igénylő telepítésnek, ha egy UEFI-re alkalmas már telepített operációs rendszerrel és SCCM agent-el rendelkező gépet kell újratelepíteni. Ezen kritériumok fennállása esetén az SCCM agent képes úgy újraindítani a gépet, hogy nem kell még a PXE boot menüt sem manuálisan felhozni, ahonnan automatikusan a megfelelő konfigurációs lemezképet fogja a telepítő betölteni. 
 
 A dolgozat elkészítésekor én preparált rendszerképeket használtam. Számomra ez volt a legelőnyösebb, mert a cluster közös tárolóhelyén volt letárolva a mester lemezkép. Egy új rendszer létrehozása másodpercekben mérhető, mert a deduplikációnak köszönhetően nem kell a rendszernek mozgatni 30GB-nyi adatot, csak létrehozza az újraelemzési pontokat.  
+
+\subsubsection{Dashboard}
+\begin{figure}
+\centering
+\includegraphics[width=1\textwidth]{dashboard.jpg}
+\caption{Az áttekintő nézetben minden szükséges és fontos információ megtekinthető}
+\label{fig:owndash}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[width=1\textwidth]{psudashboard.png}
+\caption{PowerShell Universal Dashboard példa, forrás \cite{poshtools}}
+\label{fig:psudash}
+\end{figure}
+Az üzemeltetést végzők számára előnyös, ha van egy olyan felület amelyen minden lényeges információt látni lehet. Létezik tisztán PowerShell alapú megoldás dashboard készítésre, de a PowerShell Unviersal Dashboard az én esetben nem tökéletes megoldás \cite{poshtools}. Fontos limitáció, hogy a működéséhez szükség van egy olyan szerverre amelyről minden erőforrás elérhető és azokon képes PowerShell parancsokat futtatni, továbbá licence köteles termék. Az én rendszerem úgy van megépítve, hogy nem igényel semmilyen plusz beruházást az operációs rendszeren és a hardver árán felül. Ezek mellett a saját implementációm úgy van felépítve, hogy egyetlen rendszernek kell hozzáférnie egy közös tárolóhelyhez. A közös tárolóhelyen találhatóak a gazdagépek statisztikáját tartalmazó fileok, illetve a webfelületen keresztül leadott kérelmek adatai. Az rendszer amely eléri ezeket a fileokat frissíteni tudja a dashboard-ot az adatoknak megfelelően - lásd \ref{fig:owndash}.
+
+\subsubsection{Deployment}
+A weboldal további funkciója közétartozik a rendszerigénylési űrlap. Ezen az oldalon az igénylő leadja a kérelmét a megfelelő adatok megadásával. Ebből aztán készül egy kérés, amelyet később egy ütemztett feladat feldolgoz és végrehajt. Lényeges mező a karbantartási időablak. Ezt az igénylő a kérlem leadásakor ad meg, de van módja későbbiekben is módosíttatni. Ez az időablak egy a felhasználóval kialkudott közös sáv, amikor a rendszer autmatikusan elvégezheti az olyan módosításokat amelyek leállással vagy újraindulással járnak. Ilyen módosítás például a processzor magok számának módosítása, vagy egy új hardver hozzáadása, természetesen a frissítések telepítése utáni újraindítás is megtörténik ebben az időszakban. A rendszer ad lehetőséget arra, amelyet a konzultáció során külön lehet kérvényezni, hogy bizonyos alkalmazást kiszolgáló szerverek ne legyen egy karbantartási idősávban, így növelhető a rendelkezésre állás. 
 
 \section{Automatizált megoldások}
 
